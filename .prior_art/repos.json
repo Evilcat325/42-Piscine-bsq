@@ -1,0 +1,73 @@
+[
+    {
+        "dir": "BSQ",
+        "git": "https://github.com/MrRobb/42_piscine/",
+        "id": "0"
+    },
+    {
+        "dir": "bsq",
+        "git": "https://github.com/fwuensche/42-piscine-c/",
+        "id": "1"
+    },
+    {
+        "dir": "",
+        "git": "https://github.com/Tolo789/BSQ",
+        "id": "2"
+    },
+    {
+        "dir": "bsq",
+        "git": "https://github.com/vmarchaud/42-piscine/",
+        "id": "3"
+    },
+    {
+        "dir": "",
+        "git": "https://github.com/hopeczuba/bsq",
+        "id": "4"
+    },
+    {
+        "dir": "bsq",
+        "git": "https://github.com/SuperSpyTX/42-Piscine/",
+        "id": "5"
+    },
+    {
+        "dir": "BSQ",
+        "git": "https://gitlab.pelt10.fr/Piroli/42-piscine-C",
+        "id": "6"
+    },
+    {
+        "dir": "bsq",
+        "git": "https://github.com/alvinsunyixiao/42-piscine/",
+        "id": "7"
+    },
+    {
+        "dir": "",
+        "git": "https://github.com/Zevran/BSQ",
+        "id": "8"
+    },
+    {
+        "dir": "bsq",
+        "git": "https://github.com/jraleman/42_Piscine-C",
+        "id": "9"
+    },
+    {
+        "dir": "",
+        "git": "https://github.com/malikbenkirane/42.pc.bsq",
+        "id": "10",
+        "do_not_use": "because it seems incomplete"
+    },
+    {
+        "dir": "",
+        "git": "https://github.com/EvaldoNeto/BSQ",
+        "id": "11"
+    },
+    {
+        "dir": "",
+        "git": "https://github.com/Hoax017/-42-BSQ",
+        "id": "12"
+    },
+    {
+        "dir": "",
+        "git": "https://github.com/Eywek/42-BSQ",
+        "id": "13"
+    }
+]

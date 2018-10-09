@@ -143,7 +143,9 @@ def profile_bsq_runtime(path_to_binary: str, mapfile: str, input_as=BSQInputMeth
 	return avg, variance
 
 def profile_bsq_memory_usage(path_to_binary: str, mapfile: str, input_as=BSQInputMethod.STDIN):
-	pass
+	"""
+	memory usage is a little hard to capture because varies over the duration of program execution.
+	"""
 
 def kill_all_bsq():
 	try:
@@ -174,15 +176,6 @@ def main() -> None:
 		
 		# profile_bsq_memory_usage(entry.binary_path, )
 		# kill_all_bsq()
-	"""
-	- benchmark solve time and memory usage for the following cases
-	--> all empty
-	--> all full
-	--> single horizontal
-	--> single vertical
-
-	--> generate a few random boards
-	"""
 
 if __name__ == '__main__':
 	main()

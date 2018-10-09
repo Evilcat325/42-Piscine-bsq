@@ -28,6 +28,7 @@ I'm using RSS/filesize as the metric for comparison.  This shows how memory cons
 |  2 | 0.102 |
 | 14 | 0.184 |
 | 0 | 0.292 |
+| 15 | 0.324 |
 
 # We can malloc absurd amounts of data, but it only shows up in `top/htop` when it is used.
 e.g.

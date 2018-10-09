@@ -38,11 +38,6 @@ if more than one soln, choose the most top-left square.
   
 ## Todo:
 
-build and profile all available existing solvers
-- norms?
-- builds?
-- memory usage?  
-  - https://psutil.readthedocs.io/en/release-3.4.2/#psutil.Process.memory_info
-- execution speed?
-  - timeit
+- one giant malloc to reduce number of system calls
+- packing bits 
 

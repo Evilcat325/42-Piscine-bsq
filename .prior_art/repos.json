@@ -69,5 +69,10 @@
         "git_url": "https://github.com/Eywek/42-BSQ",
         "identifier": "13",
         "makefile_dir": ""
+    },
+    {
+        "git_url": "https://github.com/sayakura/42-Exams-And-Projects",
+        "identifier": "14",
+        "makefile_dir": "BSQ-1000-in-0.02ms"
     }
 ]

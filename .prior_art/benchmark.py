@@ -13,6 +13,7 @@ POLL_RATE_S = 0.1
 HERE = os.path.abspath(os.path.dirname(__file__))
 MAPS_DIR = 'maps'
 REPOS_DIR = 'repos'
+OUTPUT_DIR = 'output'
 
 
 class BSQEntry(object):
@@ -97,7 +98,7 @@ class BSQMap(object):
 		self.path = f"{MAPS_DIR}/{self._basename}"
 		with open(self.path, "w") as outfile:
 			subprocess.check_call(["perl", "../gen_map.pl", 
-			str(x), str(y), str(density)], stdout=outfile)
+			str(x), str(y), str(self.density)], stdout=outfile)
 
 	def __str__(self):
 		return self.path
@@ -119,30 +120,36 @@ class BSQMap(object):
 BSQInputMethod = Enum('BSQInputMethod', 'STDIN FILENAME')
 
 RUNTIME_AVERAGER_SET_SIZE = 5 
-def profile_bsq_runtime(path_to_binary: str, mapfile: str, input_as=BSQInputMethod.STDIN):
+def profile_bsq_runtime(path_to_binary: str, mapfile: str, outfile:str, input_as=BSQInputMethod.STDIN):
 	""" run a few times to collect an average and a variance """
 	runtimes = []
 	mapfile = f"{MAPS_DIR}/{mapfile}"
 	print(f'\t{input_as: <{14}}', end='\t')
 	for run in range(RUNTIME_AVERAGER_SET_SIZE):
-		with open(f"{os.path.basename(path_to_binary)}_output.txt", 'w') as outfile:
-			with contexttimer.Timer() as t:
-				cmd = [f"./{path_to_binary}", mapfile]
-				try:
+		cmd = [f"./{path_to_binary}", mapfile]
+		outfile_fullname = f"{outfile}_{input_as}"
+		try:
+			with open(outfile_fullname, 'w') as ofile:
+				with contexttimer.Timer() as t:
 					if BSQInputMethod.STDIN:
-						bsq = subprocess.check_call(cmd, stdout=outfile)
+						bsq = subprocess.check_call(cmd, stdout=ofile)
 					elif BSQInputMethod.FILENAME:
 						with open(mapfile, 'r') as the_map:
-							bsq = subprocess.check_call(cmd, stdin=mapfile, stdout=outfile)
-				except subprocess.CalledProcessError as e:
-					print(f"failed to run {path_to_binary} with exception {e}")
-			runtimes.append(t.elapsed)
-	avg = sum(runtimes) / RUNTIME_AVERAGER_SET_SIZE
-	variance = np.var(runtimes)
-	print(f"Avg: {avg:.3f}s\t variance: {variance:.3f}s")
-	return avg, variance
+							bsq = subprocess.check_call(cmd, stdin=mapfile, stdout=ofile)
+				runtimes.append(t.elapsed)		
+		except subprocess.CalledProcessError as e:
+			print(f"failed to run {path_to_binary} with exception {e}")
+	with open(outfile_fullname, 'r') as ofile:
+		if "map error" in ofile.read():
+			print("Failed with map error")
+			return -1, -1
+		else:
+			avg = sum(runtimes) / RUNTIME_AVERAGER_SET_SIZE
+			variance = np.var(runtimes)
+			print(f"Avg: {avg:.3f}s\t variance: {variance:.3f}s")
+			return avg, variance
 
-def profile_bsq_memory_usage(path_to_binary: str, mapfile: str, input_as=BSQInputMethod.STDIN):
+def profile_bsq_memory_usage(path_to_binary: str, mapfile: str, outfile: str, input_as=BSQInputMethod.STDIN):
 	"""
 	memory usage is a little hard to capture because varies over the duration of program execution.
 	"""
@@ -153,6 +160,15 @@ def kill_all_bsq():
 	except subprocess.CalledProcessError:
 		pass
 
+def purge_output_dir():
+	if not os.path.isdir(OUTPUT_DIR):
+		os.mkdir(OUTPUT_DIR)
+	for f in os.listdir(OUTPUT_DIR):
+		fp = os.path.join(OUTPUT_DIR, f)
+		os.unlink(fp)
+	
+
+
 def main() -> None:
 	repo_man = RepositoryManager('repos.json')
 	[entry.clone() for entry in repo_man.entries]
@@ -160,20 +176,27 @@ def main() -> None:
 	repo_man.save()
 
 	BSQMap.remove_all()
-	BSQMap(x=1, y=100000, density=50)
-	BSQMap(x=100000, y=1, density=50)
-	BSQMap(x=100, y=1000, density=0)
-	BSQMap(x=100, y=1000, density=100)
-	BSQMap(x=100, y=1000, density=50)
+	BSQMap(x=1, y=1000000, density=50)
+	BSQMap(x=1000000, y=1, density=50)
+	BSQMap(x=100, y=10000, density=0)
+	BSQMap(x=100, y=10000, density=100)
+	BSQMap(x=100, y=10000, density=50)
 
-	for entry in repo_man.buildable_entries:
+	purge_output_dir()
+
+	# These two are pretty blazing fast.
+	selected_entries = [e for e in repo_man.buildable_entries if e.identifier in ['2', '9', '14']]
+
+	for entry in selected_entries:
 		print(f">>>>> repo: {entry.git_url}  I'll average {RUNTIME_AVERAGER_SET_SIZE} runs.")
 		for mapfile in BSQMap.all_maps():
+			outfile = os.path.join(OUTPUT_DIR, f"{entry.identifier}_{os.path.basename(mapfile)}")
 			print(f"{mapfile}")
-			profile_bsq_runtime(entry.binary_path, mapfile, BSQInputMethod.STDIN)
-			profile_bsq_runtime(entry.binary_path, mapfile, BSQInputMethod.FILENAME)
+			profile_bsq_runtime(entry.binary_path, mapfile, outfile, BSQInputMethod.STDIN)
+			profile_bsq_runtime(entry.binary_path, mapfile, outfile, BSQInputMethod.FILENAME)
 		kill_all_bsq()
 		
+
 		# profile_bsq_memory_usage(entry.binary_path, )
 		# kill_all_bsq()
 

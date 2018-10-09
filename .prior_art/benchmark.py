@@ -6,50 +6,79 @@ import json
 import psutil
 import time
 import numpy as np
+from enum import Enum
 import contexttimer
 
 POLL_RATE_S = 0.1
-CUR_DIR = os.getcwd()
+HERE = os.path.abspath(os.path.dirname(__file__))
 MAPS_DIR = 'maps'
+REPOS_DIR = 'repos'
 
-class RepositoryTyrant(object):
-	def __init__(self, repo_json_filename: str):
-		self.repos = self.load(repo_json_filename)
-		self.filename = repo_json_filename
-	
+
+class BSQEntry(object):
+	def __init__(self, identifier:str, git_url:str, makefile_dir:str, **kwargs):
+		self.identifier = identifier
+		self.git_url = git_url
+		self.makefile_dir = makefile_dir
+		self.__dict__.update(**kwargs)
+
+	def clone(self):
+		if not os.path.isdir(self.repository_root_path):
+			subprocess.check_call(['git', 'clone', self.git_url, self.repository_root_path])
+		else:
+			print(f"Not cloning because dir {self.identifier} already exists")
+
+	def build(self):
+		os.chdir(HERE)
+		os.chdir(self.bsq_makefile_dir)
+		print(f"building {self.git_url}")
+		try:
+			subprocess.check_call(['make'])
+		except subprocess.CalledProcessError as e:
+			print(f"failed to build with error {e}")
+			self.is_buildable = False
+		os.chdir(HERE)
+
 	@property
-	def buildable_repos(self):
-		return [repo for repo in self.repos if not repo.get('do_not_use')]
+	def repository_root_path(self):
+		return os.path.join(HERE, REPOS_DIR, self.identifier)
 
+	@property
+	def bsq_makefile_dir(self):
+		return os.path.join(self.repository_root_path, self.makefile_dir)
+
+	@property
+	def is_buildable(self):
+		return False if self.__dict__.get('do_not_use') else True
+
+	@property
+	def binary_path(self):
+		return os.path.relpath(os.path.join(self.bsq_makefile_dir, "bsq"), HERE)
+
+
+class RepositoryManager(object):
+	def __init__(self, repo_json_filename: str):
+		self.repo_json = self.load(repo_json_filename)
+		self.filename = repo_json_filename
+		self.entries = [BSQEntry(**kwargs) for kwargs in self.repo_json]
+	
 	def load(self, filename: str) -> dict:
 		with open(filename, "r") as repofile:
 			repos = json.load(repofile)
 			for repo in repos:
-				if not repo.get("id"):
-					repo['id'] = next((str(n) for n in range(len(repos)) if str(n) not in [r.get("id") for r in repos]))
-					print(f"Assigned ID {repo['id']} to repo: {repo['git']}")
+				if not repo.get('identifier'):
+					repo['identifier'] = next((str(n) for n in range(len(repos)) if str(n) not in [r.get("identifier") for r in repos]))
+					print(f"Assigned ID {repo['identifier']} to repo: {repo['git']}")
 			return repos
 
 	def	save(self, filename: str=None) -> None:
 		""" save the id of the repo to the json file such that it persists. """
 		with open(filename or self.filename, "w") as repofile:
-			json.dump(self.repos, repofile, sort_keys=True, indent=4)
+			json.dump(self.repo_json, repofile, sort_keys=True, indent=4)
 
-	def clone_all(self) -> None:
-		for repo in self.repos:
-			if not os.path.isdir(repo['id']):
-				subprocess.check_call(['git', 'clone', repo["git"], repo['id']])
-			else:
-				print(f"Not cloning because dir {repo['id']} exists")
-
-	def build_bsq_binaries(self) -> None:
-		for repo in self.buildable_repos:
-			rel_path = os.path.join(repo['id'], repo['dir'])
-			print(f"entering dir {rel_path}")
-			os.chdir(rel_path)
-			print(subprocess.check_call(['make', 're']))
-			os.chdir(CUR_DIR)
-
+	@property
+	def buildable_entries(self):
+		return [e for e in self.entries if e.is_buildable]
 
 class BSQMap(object):
 	def __init__(self, x: int, y: int, density: int):
@@ -83,53 +112,49 @@ class BSQMap(object):
 			fp = os.path.join(MAPS_DIR, f)
 			os.unlink(fp)
 
-def profile_bsq_with_args(path_to_binary: str, mapfile: str, log_name: str, plot_name: str):
-	cmd = [f"./{path_to_binary}", f"{MAPS_DIR}/{mapfile}"]
-	print(f"Starting up command '{cmd}' and attaching to process")
-	sprocess = subprocess.Popen(cmd)
-	pid = sprocess.pid
+# 
+#  Profiling Functions
+# 
 
-def profile_bsq_with_stdin():
-	raise NotImplementedError
+BSQInputMethod = Enum('BSQInputMethod', 'STDIN FILENAME')
 
-RUNTIME_AVERAGER_SET_SIZE = 5
-def profile_bsq_runtime(path_to_binary: str, mapfile: str):
+RUNTIME_AVERAGER_SET_SIZE = 5 
+def profile_bsq_runtime(path_to_binary: str, mapfile: str, input_as=BSQInputMethod.STDIN):
 	""" run a few times to collect an average and a variance """
 	runtimes = []
+	mapfile = f"{MAPS_DIR}/{mapfile}"
+	print(f'\t{input_as: <{14}}', end='\t')
 	for run in range(RUNTIME_AVERAGER_SET_SIZE):
-		with open(f"os.path.basename(path_to_binary)_output.txt", 'w') as outfile:
+		with open(f"{os.path.basename(path_to_binary)}_output.txt", 'w') as outfile:
 			with contexttimer.Timer() as t:
-				cmd = [f"./{path_to_binary}", f"{MAPS_DIR}/{mapfile}"]
-				bsq = subprocess.check_call(cmd, stdout=outfile)
+				cmd = [f"./{path_to_binary}", mapfile]
+				try:
+					if BSQInputMethod.STDIN:
+						bsq = subprocess.check_call(cmd, stdout=outfile)
+					elif BSQInputMethod.FILENAME:
+						with open(mapfile, 'r') as the_map:
+							bsq = subprocess.check_call(cmd, stdin=mapfile, stdout=outfile)
+				except subprocess.CalledProcessError as e:
+					print(f"failed to run {path_to_binary} with exception {e}")
 			runtimes.append(t.elapsed)
 	avg = sum(runtimes) / RUNTIME_AVERAGER_SET_SIZE
 	variance = np.var(runtimes)
 	print(f"Avg: {avg:.3f}s\t variance: {variance:.3f}s")
+	return avg, variance
 
-def print_output_from_bsqs(path_to_binary: str, mapfile: str):
-	try:
-		cmd = [f"./{path_to_binary}", f"{MAPS_DIR}/{mapfile}"]
-		bsq = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-		bsq_process = psutil.Process(pid=bsq.pid)
-		import ipdb; ipdb.set_trace()
-		stdout_data = bsq.communicate()[0]
-		if stdout_data:
-			print(stdout_data.decode('ascii'))
-		else:
-			print(f'No output from {path_to_binary}')
-	except Exception as e:
-		print(f"Failed to execute {path_to_binary} with error {e}")
+def profile_bsq_memory_usage(path_to_binary: str, mapfile: str, input_as=BSQInputMethod.STDIN):
+	pass
 
 def kill_all_bsq():
 	try:
-		subprocess.call(['killall', 'bsq'], stdout=None, stderr=None)
+		subprocess.call(['killall', 'bsq'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 	except subprocess.CalledProcessError:
 		pass
 
 def main() -> None:
-	repo_man = RepositoryTyrant('repos.json')
-	# repo_man.clone_all()
-	# repo_man.build_bsq_binaries()
+	repo_man = RepositoryManager('repos.json')
+	[entry.clone() for entry in repo_man.entries]
+	[entry.build() for entry in repo_man.entries]
 	repo_man.save()
 
 	BSQMap.remove_all()
@@ -139,13 +164,16 @@ def main() -> None:
 	BSQMap(x=100, y=1000, density=100)
 	BSQMap(x=100, y=1000, density=50)
 
-	for repo in repo_man.repos:
-		print(f"repo: {repo['git']}  Averaging {RUNTIME_AVERAGER_SET_SIZE} runs.")
+	for entry in repo_man.buildable_entries:
+		print(f">>>>> repo: {entry.git_url}  I'll average {RUNTIME_AVERAGER_SET_SIZE} runs.")
 		for mapfile in BSQMap.all_maps():
-			print(f"map: {mapfile}", end='\t')
-			binary = os.path.join(repo["id"], repo["dir"], "bsq")
-			profile_bsq_runtime(binary, mapfile)
+			print(f"{mapfile}")
+			profile_bsq_runtime(entry.binary_path, mapfile, BSQInputMethod.STDIN)
+			profile_bsq_runtime(entry.binary_path, mapfile, BSQInputMethod.FILENAME)
 		kill_all_bsq()
+		
+		# profile_bsq_memory_usage(entry.binary_path, )
+		# kill_all_bsq()
 	"""
 	- benchmark solve time and memory usage for the following cases
 	--> all empty

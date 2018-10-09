@@ -1,73 +1,73 @@
 [
     {
-        "dir": "BSQ",
-        "git": "https://github.com/MrRobb/42_piscine/",
-        "id": "0"
+        "git_url": "https://github.com/MrRobb/42_piscine/",
+        "identifier": "0",
+        "makefile_dir": "BSQ"
     },
     {
-        "dir": "bsq",
-        "git": "https://github.com/fwuensche/42-piscine-c/",
-        "id": "1"
+        "git_url": "https://github.com/fwuensche/42-piscine-c/",
+        "identifier": "1",
+        "makefile_dir": "bsq"
     },
     {
-        "dir": "",
-        "git": "https://github.com/Tolo789/BSQ",
-        "id": "2"
+        "git_url": "https://github.com/Tolo789/BSQ",
+        "identifier": "2",
+        "makefile_dir": ""
     },
     {
-        "dir": "bsq",
-        "git": "https://github.com/vmarchaud/42-piscine/",
-        "id": "3"
+        "git_url": "https://github.com/vmarchaud/42-piscine/",
+        "identifier": "3",
+        "makefile_dir": "bsq"
     },
     {
-        "dir": "",
-        "git": "https://github.com/hopeczuba/bsq",
-        "id": "4"
+        "git_url": "https://github.com/hopeczuba/bsq",
+        "identifier": "4",
+        "makefile_dir": ""
     },
     {
-        "dir": "bsq",
-        "git": "https://github.com/SuperSpyTX/42-Piscine/",
-        "id": "5"
+        "git_url": "https://github.com/SuperSpyTX/42-Piscine/",
+        "identifier": "5",
+        "makefile_dir": "bsq"
     },
     {
-        "dir": "BSQ",
-        "git": "https://gitlab.pelt10.fr/Piroli/42-piscine-C",
-        "id": "6"
+        "git_url": "https://gitlab.pelt10.fr/Piroli/42-piscine-C",
+        "identifier": "6",
+        "makefile_dir": "BSQ"
     },
     {
-        "dir": "bsq",
-        "git": "https://github.com/alvinsunyixiao/42-piscine/",
-        "id": "7"
+        "git_url": "https://github.com/alvinsunyixiao/42-piscine/",
+        "identifier": "7",
+        "makefile_dir": "bsq"
     },
     {
-        "dir": "",
-        "git": "https://github.com/Zevran/BSQ",
-        "id": "8"
+        "git_url": "https://github.com/Zevran/BSQ",
+        "identifier": "8",
+        "makefile_dir": ""
     },
     {
-        "dir": "bsq",
-        "git": "https://github.com/jraleman/42_Piscine-C",
-        "id": "9"
+        "git_url": "https://github.com/jraleman/42_Piscine-C",
+        "identifier": "9",
+        "makefile_dir": "bsq"
     },
     {
-        "dir": "",
-        "git": "https://github.com/malikbenkirane/42.pc.bsq",
-        "id": "10",
-        "do_not_use": "because it seems incomplete"
+        "do_not_use": "because it seems incomplete",
+        "git_url": "https://github.com/malikbenkirane/42.pc.bsq",
+        "identifier": "10",
+        "makefile_dir": ""
     },
     {
-        "dir": "",
-        "git": "https://github.com/EvaldoNeto/BSQ",
-        "id": "11"
+        "git_url": "https://github.com/EvaldoNeto/BSQ",
+        "identifier": "11",
+        "makefile_dir": ""
     },
     {
-        "dir": "",
-        "git": "https://github.com/Hoax017/-42-BSQ",
-        "id": "12"
+        "git_url": "https://github.com/Hoax017/-42-BSQ",
+        "identifier": "12",
+        "makefile_dir": ""
     },
     {
-        "dir": "",
-        "git": "https://github.com/Eywek/42-BSQ",
-        "id": "13"
+        "git_url": "https://github.com/Eywek/42-BSQ",
+        "identifier": "13",
+        "makefile_dir": ""
     }
 ]

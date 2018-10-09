@@ -8,6 +8,7 @@ import time
 import numpy as np
 from enum import Enum
 import contexttimer
+import humanize
 
 POLL_RATE_S = 0.1
 HERE = os.path.abspath(os.path.dirname(__file__))
@@ -123,8 +124,7 @@ RUNTIME_AVERAGER_SET_SIZE = 5
 def profile_bsq_runtime(path_to_binary: str, mapfile: str, outfile:str, input_as=BSQInputMethod.STDIN):
 	""" run a few times to collect an average and a variance """
 	runtimes = []
-	mapfile = f"{MAPS_DIR}/{mapfile}"
-	print(f'\t{input_as: <{14}}', end='\t')
+	print(f'\t{input_as.name: <{14}}', end='\t')
 	for run in range(RUNTIME_AVERAGER_SET_SIZE):
 		cmd = [f"./{path_to_binary}", mapfile]
 		outfile_fullname = f"{outfile}_{input_as}"
@@ -146,13 +146,57 @@ def profile_bsq_runtime(path_to_binary: str, mapfile: str, outfile:str, input_as
 		else:
 			avg = sum(runtimes) / RUNTIME_AVERAGER_SET_SIZE
 			variance = np.var(runtimes)
-			print(f"Avg: {avg:.3f}s\t variance: {variance:.3f}s")
+			print(f"avg: {avg:.3f}s\t variance: {variance:.3f}s")
 			return avg, variance
 
+
+IM_BORED_S = 10
 def profile_bsq_memory_usage(path_to_binary: str, mapfile: str, outfile: str, input_as=BSQInputMethod.STDIN):
 	"""
 	memory usage is a little hard to capture because varies over the duration of program execution.
 	"""
+	res_usage = []
+	print(f'\t{input_as.name: <{14}}', end='\t')
+	for run in range(RUNTIME_AVERAGER_SET_SIZE):
+		cmd = [f"./{path_to_binary}", mapfile]
+		outfile_fullname = f"{outfile}_{input_as}"
+		try:
+			with open(outfile_fullname, 'w') as ofile:
+				with contexttimer.Timer() as t:
+					#
+					#	Use Popen instead of check_call, because it's non-blocking
+					#
+					if BSQInputMethod.STDIN:
+						bsq = subprocess.Popen(cmd, stdout=ofile)
+					elif BSQInputMethod.FILENAME:
+						with open(mapfile, 'r') as the_map:
+							bsq = subprocess.Popen(cmd, stdin=mapfile, stdout=ofile)
+					proc = psutil.Process(bsq.pid)
+					while (bsq.poll() == None):
+						try:
+							# rss = proc.memory_info().rss
+							# print(f"{humanize.naturalsize(rss)}, {rss}")
+							res_usage.append(proc.memory_info().rss)
+						except (psutil._exceptions.ZombieProcess, psutil._exceptions.AccessDenied):
+							break
+						time.sleep(0.01)
+						if t.elapsed > IM_BORED_S:
+							print(f"Time exceeded {IM_BORED_S}s, exiting.")
+							kill_all_bsq()
+							return
+		except subprocess.CalledProcessError as e:
+			print(f"failed to run {path_to_binary} with exception {e}")
+	with open(outfile_fullname, 'r') as ofile:
+		if "map error" in ofile.read():
+			print("Failed with map error")
+			return -1, -1
+		else:
+			avg = sum(res_usage) / len(res_usage)
+			print(f"avg RSS: {humanize.naturalsize(avg): <{14}}\t"\
+			      f"max RSS: {humanize.naturalsize(max(res_usage)): <{14}}\t"\
+				  f"min RSS: {humanize.naturalsize(min(res_usage)): <{14}}\t"\
+				  f"max RSS / filesize: {max(res_usage) / os.path.getsize(mapfile):.2f}")
+
 
 def kill_all_bsq():
 	try:
@@ -175,28 +219,35 @@ def main() -> None:
 	[entry.build() for entry in repo_man.entries]
 	repo_man.save()
 
-	BSQMap.remove_all()
-	BSQMap(x=1, y=1000000, density=50)
-	BSQMap(x=1000000, y=1, density=50)
-	BSQMap(x=100, y=10000, density=0)
-	BSQMap(x=100, y=10000, density=100)
-	BSQMap(x=100, y=10000, density=50)
+	# Kura Peng's work would indicate that the maximum expected size is about 1M points
+	# https://github.com/sayakura/42-Exams-And-Projects/blob/master/BSQ-1000-in-0.02ms/srcs/main.c#L89
 
+	# BSQMap.remove_all()
+	# BSQMap(x=1, y=100, density=50)  # These edge cases should fail just as hard at low point counts
+	# BSQMap(x=100, y=1, density=50)
+	# BSQMap(x=100, y=100, density=0)
+	# BSQMap(x=100, y=100, density=100)
+
+	# BSQMap(x=100, y=50000, density=0)
+	# BSQMap(x=100, y=50000, density=100)
+	# BSQMap(x=100, y=50000, density=50)
 	purge_output_dir()
 
 	# These two are pretty blazing fast.
 	selected_entries = [e for e in repo_man.buildable_entries if e.identifier in ['2', '9', '14']]
 
-	for entry in selected_entries:
-		print(f">>>>> repo: {entry.git_url}  I'll average {RUNTIME_AVERAGER_SET_SIZE} runs.")
+	for entry in repo_man.buildable_entries:
+		print(f">>>>> repo: [{entry.identifier}] {entry.git_url}  I'll average {RUNTIME_AVERAGER_SET_SIZE} runs.")
 		for mapfile in BSQMap.all_maps():
 			outfile = os.path.join(OUTPUT_DIR, f"{entry.identifier}_{os.path.basename(mapfile)}")
-			print(f"{mapfile}")
-			profile_bsq_runtime(entry.binary_path, mapfile, outfile, BSQInputMethod.STDIN)
-			profile_bsq_runtime(entry.binary_path, mapfile, outfile, BSQInputMethod.FILENAME)
+			mapfile_fullpath = f"{MAPS_DIR}/{mapfile}"
+			print(f"{mapfile :<{20}} -- size: {humanize.naturalsize(os.path.getsize(mapfile_fullpath))}")
+			# profile_bsq_runtime(entry.binary_path, mapfile, outfile, BSQInputMethod.STDIN)
+			# profile_bsq_runtime(entry.binary_path, mapfile, outfile, BSQInputMethod.FILENAME)
+			profile_bsq_memory_usage(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.STDIN)
+			profile_bsq_memory_usage(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.FILENAME)
 		kill_all_bsq()
 		
-
 		# profile_bsq_memory_usage(entry.binary_path, )
 		# kill_all_bsq()
 

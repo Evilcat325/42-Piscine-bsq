@@ -233,19 +233,18 @@ def main() -> None:
 	# BSQMap(x=100, y=50000, density=50)
 	purge_output_dir()
 
-	# These two are pretty blazing fast.
-	selected_entries = [e for e in repo_man.buildable_entries if e.identifier in ['2', '9', '14']]
+	selected_entries = [e for e in repo_man.buildable_entries if e.identifier in ['0', '2', '9', '14']]
 
-	for entry in repo_man.buildable_entries:
+	for entry in selected_entries:
 		print(f">>>>> repo: [{entry.identifier}] {entry.git_url}  I'll average {RUNTIME_AVERAGER_SET_SIZE} runs.")
 		for mapfile in BSQMap.all_maps():
 			outfile = os.path.join(OUTPUT_DIR, f"{entry.identifier}_{os.path.basename(mapfile)}")
 			mapfile_fullpath = f"{MAPS_DIR}/{mapfile}"
 			print(f"{mapfile :<{20}} -- size: {humanize.naturalsize(os.path.getsize(mapfile_fullpath))}")
-			# profile_bsq_runtime(entry.binary_path, mapfile, outfile, BSQInputMethod.STDIN)
-			# profile_bsq_runtime(entry.binary_path, mapfile, outfile, BSQInputMethod.FILENAME)
-			profile_bsq_memory_usage(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.STDIN)
-			profile_bsq_memory_usage(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.FILENAME)
+			profile_bsq_runtime(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.STDIN)
+			profile_bsq_runtime(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.FILENAME)
+			# profile_bsq_memory_usage(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.STDIN)
+			# profile_bsq_memory_usage(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.FILENAME)
 		kill_all_bsq()
 		
 		# profile_bsq_memory_usage(entry.binary_path, )

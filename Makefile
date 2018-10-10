@@ -6,7 +6,7 @@
 #    By: seli <seli@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/09 16:23:54 by seli              #+#    #+#              #
-#    Updated: 2018/10/10 02:54:57 by seli             ###   ########.fr        #
+#    Updated: 2018/10/10 03:36:01 by seli             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ IDIR = ./includes
 SRCDIR = srcs
 
 SOURCES = ft_main.c ft_data.c ft_stdio.c ft_string.c \
-			ft_solve_bsq.c ft_error.c ft_bsq_util.c  \
+			ft_solve_bsq.c ft_bsq_util.c \
 			ft_bsq_parser.c
 SOURCES := $(SOURCES:%=$(SRCDIR)/%)
 
@@ -27,10 +27,10 @@ SOURCES := $(SOURCES:%=$(SRCDIR)/%)
 all: $(NAME)
 
 $(NAME):
-	@$(CC) $(CFLAGS) -o $(NAME) $(SOURCES) .tests/test_print_map_list.c
+	@$(CC) $(CFLAGS) -o $(NAME) $(SOURCES) srcs/ft_error.c .tests/test_print_map_list.c
 
 debug:
-	@$(CC) $(CFLAGS) -o $(NAME) $(SOURCES) .tests/test_print_map_list.c -g
+	@$(CC) $(CFLAGS) -o $(NAME) $(SOURCES) .debug/ft_error.c .tests/test_print_map_list.c -g
 
 clean:
 

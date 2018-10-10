@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:28:24 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 03:06:39 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 03:36:11 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		main(int argc, char **argv)
 
 	i = 1;
 	if (argc < 2)
-		return (ft_map_error());
+		return (ft_map_error("too few args"));
 	while (i < argc)
 	{
 		ft_solve_bsq(argv[i]);

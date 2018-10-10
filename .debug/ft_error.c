@@ -6,18 +6,16 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 17:02:42 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 02:48:59 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 03:18:14 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_bsq.h"
 #include <unistd.h>
-
-#define UNUSED(x) (void)(x)
+#include <stdio.h>
 
 int		ft_map_error(char *msg)
 {
-	UNUSED(msg);
-	write(1, "map error\n", 10);
+	printf("%s\n", msg);
 	return (-1);
 }

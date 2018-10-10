@@ -3,29 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_data.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 18:33:34 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 00:27:46 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 02:58:12 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_bsq.h"
 #include <stdlib.h>
 
-t_head		*create_head_node(t_head **prev)
+void	ft_initialize_parser_state(t_parser_state *state)
 {
-	t_head	*curr;
+	state->buf_i = 0;
+	state->position = 0;
+	state->break_position = 0;
+	state->break_in_line = FALSE;
+	state->line_number = 0;
+	state->curr_node = NULL;
+}
 
-	if ((curr = malloc(sizeof(t_head))) == NULL)
-		return (NULL);
-	if (*prev)
-		(*prev)->next = curr;
-	curr->prev = *prev;
-	curr->next = NULL;
-	curr->line = NULL;
-	curr->search = NULL;
-	return (curr);
+void		ft_initialize_new_line(t_parser_state *state)
+{
+	state->position = 0;
+	state->break_position = 0;
+	state->curr_node = 0;
+	state->head_list[state->line_number].line = NULL;
+	state->head_list[state->line_number].search = NULL;
 }
 
 t_line		*create_line_node(t_line **prev, int position, int empty_len)

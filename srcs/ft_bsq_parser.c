@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 02:42:36 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 14:10:32 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 14:13:53 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,7 @@ void		ft_parse_line(char buf[BUF_SIZE + 1], t_parser_state *state)
 		if (state->break_in_line)
 			break ;
 	}
-	if (state->break_in_line)
-	{
-		;
-	}
-	else
+	if (!state->break_in_line)
 	{
 		if (state->file_info.width == 0)
 			state->file_info.width = state->position;

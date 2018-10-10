@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:34:51 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 14:10:13 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 14:13:37 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@ typedef struct		s_square_info
 	int				col;
 	int				square_size;
 }					t_square_info;
+
+/*
+**	buf_i : buffer index
+*/
 
 typedef struct		s_parser_state
 {

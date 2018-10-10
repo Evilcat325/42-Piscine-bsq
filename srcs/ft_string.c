@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 19:06:24 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 03:31:35 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 03:42:10 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		ft_obstacle_len(char *str, int *break_in_line)
 	}
 	if (!*str)
 		*break_in_line = BREAK_IN_OBSTACLE;
-	else if (*str != g_info.empty && *str != g_info.obstacle)
-		return (-1);
+	else if (*str != g_info.empty && *str != g_info.obstacle && *str != '\n')
+		return (FAILED);
 	return (len);
 }

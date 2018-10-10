@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 02:42:36 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 03:22:18 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 03:46:51 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int			ft_parse_header(char buf[BUF_SIZE + 1], t_parser_state *state)
 	state->buf_i = read_bsq_header(buf, &g_info);
 	if (state->buf_i == FAILED)
 		return (FAILED);
-	state->buf_i += 1;
 	state->head_list = malloc(sizeof(t_head) * g_info.height);
 	if (state->head_list == NULL)
 		return (FAILED);

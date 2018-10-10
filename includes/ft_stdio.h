@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_stdio.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 20:31:00 by seli              #+#    #+#             */
-/*   Updated: 2018/10/09 20:31:27 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/09 22:05:40 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_STDIO_H
 # define FT_STDIO_H
 
-int		ft_atoi(char *str);
+int	ft_atoi_ptr(char *str, int *out);
 
 #endif

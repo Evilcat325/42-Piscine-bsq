@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:34:51 by seli              #+#    #+#             */
-/*   Updated: 2018/10/09 21:31:17 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/09 21:58:17 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ typedef struct		s_line
 {
 	int				index;
 	int				length;
-	t_line			*next;
+	struct s_line	*next;
 }					t_line;
 
 typedef struct		s_head
 {
-	t_head			*prev;
-	t_head			*next;
-	t_line			*line;
-	t_line			*search;
+	struct s_head	*prev;
+	struct s_head	*next;
+	struct s_head	*line;
+	struct s_head	*search;
 }					t_head;
 
 typedef struct		s_file_info
@@ -49,6 +49,6 @@ t_file_info			g_info = {
 	.empty = '.',
 	.obstacle = 'o',
 	.full = 'x',
-}
+};
 
 #endif

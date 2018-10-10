@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 00:34:38 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 01:00:49 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,13 @@ int		ft_parse_bsq(char *filename, t_head **head)
 		return (FALSE);
 	break_in_line = FALSE;
 	curr_head = NULL;
+	result = read(fd, buf, BUF_SIZE);
+	i = read_bsq_header(buf, &g_info);
+	if (i < 0)
+		return (-1);
 	while ((result = read(fd, buf, BUF_SIZE)))
 	{
 		buf[result] = 0;
-		i = 0;
 		while (buf[i])
 		{
 			if (break_in_line == FALSE)

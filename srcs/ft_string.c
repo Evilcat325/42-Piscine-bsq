@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 19:06:24 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 14:10:04 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 14:20:38 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		ft_space_len(char *str, t_parser_state *state)
 		state->break_in_line = BREAK_IN_EMPTY;
 	else if (*str != state->file_info.empty
 				&& *str != state->file_info.obstacle && *str != '\n')
-		return (FAILED);
+		return (ft_map_error("invalid char after space"));
 	return (len);
 }
 
@@ -44,6 +44,6 @@ int		ft_obstacle_len(char *str, t_parser_state *state)
 		state->break_in_line = BREAK_IN_OBSTACLE;
 	else if (*str != state->file_info.empty
 				&& *str != state->file_info.obstacle && *str != '\n')
-		return (FAILED);
+		return (ft_map_error("invalid char after obstacle"));
 	return (len);
 }

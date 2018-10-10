@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 02:42:36 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 14:13:53 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 14:25:37 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int			ft_parse_bsq(int fd, t_parser_state *state)
 			&& (ft_parse_header(buf, state) == FAILED))
 			return (FAILED);
 		while (buf[state->buf_i])
-			ft_parse_line(buf, state);
+			if (ft_parse_line(buf, state) == FAILED)
+				return (FAILED);
 	}
 	return (SUCCESS);
 }
@@ -44,7 +45,7 @@ int			ft_parse_header(char buf[BUF_SIZE + 1], t_parser_state *state)
 	return (SUCCESS);
 }
 
-void		ft_parse_line(char buf[BUF_SIZE + 1], t_parser_state *state)
+int			ft_parse_line(char buf[BUF_SIZE + 1], t_parser_state *state)
 {
 	if (state->break_in_line)
 		ft_parse_continue(&buf[state->buf_i], state);
@@ -60,10 +61,13 @@ void		ft_parse_line(char buf[BUF_SIZE + 1], t_parser_state *state)
 	{
 		if (state->file_info.width == 0)
 			state->file_info.width = state->position;
+		if (state->file_info.width != state->position)
+			return (ft_map_error("different length in map"));
 		state->line_number += 1;
 		state->buf_i += 1;
 	}
 	state->buf_i += state->position - state->break_position;
+	return (SUCCESS);
 }
 
 int			ft_parse_next_space(char *start, t_parser_state *state)
@@ -72,7 +76,7 @@ int			ft_parse_next_space(char *start, t_parser_state *state)
 	int		obstcale_len;
 
 	space_len = ft_space_len(start, state);
-	if (space_len != 0)
+	if (space_len > 0)
 	{
 		state->curr_node =
 			create_line_node(&state->curr_node, state->position, space_len);
@@ -80,11 +84,13 @@ int			ft_parse_next_space(char *start, t_parser_state *state)
 			state->head_list[state->line_number].line = state->curr_node;
 		state->position += space_len;
 	}
-	else
+	else if (space_len == 0)
 	{
 		obstcale_len = ft_obstacle_len(start, state);
 		state->position += obstcale_len;
 	}
+	else
+		return (FAILED);
 	return (SUCCESS);
 }
 
@@ -97,8 +103,13 @@ int			ft_parse_continue(char *start, t_parser_state *state)
 	{
 		state->break_in_line = FALSE;
 		space_len = ft_space_len(start, state);
-		state->curr_node->length += space_len;
-		state->position += space_len;
+		if (space_len >= 0)
+		{
+			state->curr_node->length += space_len;
+			state->position += space_len;
+		}
+		else
+			return (FAILED);
 	}
 	else
 		state->break_in_line = FALSE;

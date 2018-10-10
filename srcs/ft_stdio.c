@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 20:31:37 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 14:12:33 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 14:15:54 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	ft_print_map(t_parser_state *state)
 	int			line;
 	int			i;
 	t_line		*node;
+	char		*empty;
+	char		*obstcale;
 
 	line = 0;
 	while (line < state->line_number)

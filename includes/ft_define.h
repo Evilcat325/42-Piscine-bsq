@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_define.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:34:51 by seli              #+#    #+#             */
-/*   Updated: 2018/10/09 21:31:17 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/09 22:10:14 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,22 @@
 # define SUCCESS 1
 # define FAILED 0
 # define BUF_SIZE 4096
+# define BREAK_IN_EMPTY 1
+# define BREAK_IN_OBSTACLE 2
 
 typedef struct		s_line
 {
 	int				index;
 	int				length;
-	t_line			*next;
+	struct s_line	*next;
 }					t_line;
 
 typedef struct		s_head
 {
-	t_head			*prev;
-	t_head			*next;
-	t_line			*line;
-	t_line			*search;
+	struct s_head	*prev;
+	struct s_head	*next;
+	struct s_line	*line;
+	struct s_line	*search;
 }					t_head;
 
 typedef struct		s_file_info
@@ -43,12 +45,6 @@ typedef struct		s_file_info
 	char			full;
 }					t_file_info;
 
-t_file_info			g_info = {
-	.height = 0,
-	.width = 0,
-	.empty = '.',
-	.obstacle = 'o',
-	.full = 'x',
-}
+t_file_info			g_info;
 
 #endif

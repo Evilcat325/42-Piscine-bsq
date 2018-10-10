@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_solve_bsq.h                                     :+:      :+:    :+:   */
+/*   ft_test.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/09 16:32:35 by seli              #+#    #+#             */
-/*   Updated: 2018/10/09 22:02:38 by seli             ###   ########.fr       */
+/*   Created: 2018/10/09 21:32:31 by seli              #+#    #+#             */
+/*   Updated: 2018/10/09 21:34:07 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_SOLVE_BSQ_H
-# define FT_SOLVE_BSQ_H
-# include <fcntl.h>
-# include <unistd.h>
+#ifndef FT_TEST_H
+# define FT_TEST_H
+# include <stdio.h>
 # include "ft_define.h"
-# include "ft_data.h"
-# include "ft_string.h"
-# include "ft_test.h"
 
-void	ft_solve_bsq(char *filename);
-int		ft_parse_bsq(char *filename, t_head **head);
+void	ft_print_map_list(t_head *head);
 
 #endif

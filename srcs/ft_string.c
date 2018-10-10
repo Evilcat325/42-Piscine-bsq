@@ -6,23 +6,38 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 19:06:24 by seli              #+#    #+#             */
-/*   Updated: 2018/10/09 20:09:15 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/09 22:03:18 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_string.h"
 
-int		ft_space_len(char *str, int	*break_in_line)
+int		ft_space_len(char *str, int *break_in_line)
 {
 	int	len;
 
 	len = 0;
-	while (*str && *str != '\n' && *str != OBSTACLE)
+	while (*str && *str != '\n' && *str != g_info.obstacle)
 	{
 		str++;
 		len++;
 	}
 	if (!*str)
-		*break_in_line = TRUE;
+		*break_in_line = BREAK_IN_EMPTY;
+	return (len);
+}
+
+int		ft_obstacle_len(char *str, int *break_in_line)
+{
+	int	len;
+
+	len = 0;
+	while (*str && *str != '\n' && *str != g_info.obstacle)
+	{
+		str++;
+		len++;
+	}
+	if (!*str)
+		*break_in_line = BREAK_IN_OBSTACLE;
 	return (len);
 }

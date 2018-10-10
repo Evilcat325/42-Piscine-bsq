@@ -6,7 +6,7 @@
 #    By: seli <seli@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/09 16:23:54 by seli              #+#    #+#              #
-#    Updated: 2018/10/09 16:27:55 by seli             ###   ########.fr        #
+#    Updated: 2018/10/09 22:15:23 by seli             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ CFLAGS = -Wall -Wextra -Werror -I$(IDIR)
 IDIR = ./includes
 SRCDIR = srcs
 
-SOURCES = ft_main.c
+SOURCES = ft_main.c ft_data.c ft_stdio.c ft_string.c ft_test.c \
+			ft_solve_bsq.c
 SOURCES := $(SOURCES:%=$(SRCDIR)/%)
 
 
@@ -26,6 +27,9 @@ all: $(NAME)
 
 $(NAME):
 	@$(CC) $(CFLAGS) -o $(NAME) $(SOURCES)
+
+debug:
+	@$(CC) $(CFLAGS) -o $(NAME) $(SOURCES) -g
 
 clean:
 

@@ -79,5 +79,10 @@
         "git_url": "https://github.com/xlz447/42Piscine",
         "identifier": "15",
         "makefile_dir": "bsq"
+    },
+    {
+        "git_url": "None",
+        "identifier": "16",
+        "makefile_dir": "."
     }
 ]

@@ -215,8 +215,8 @@ def purge_output_dir():
 
 def main() -> None:
 	repo_man = RepositoryManager('repos.json')
-	[entry.clone() for entry in repo_man.entries]
-	[entry.build() for entry in repo_man.entries]
+	# [entry.clone() for entry in repo_man.entries]
+	# [entry.build() for entry in repo_man.entries]
 	repo_man.save()
 
 	# Kura Peng's work would indicate that the maximum expected size is about 1M points
@@ -233,7 +233,9 @@ def main() -> None:
 	# BSQMap(x=100, y=50000, density=50)
 	purge_output_dir()
 
-	selected_entries = [e for e in repo_man.buildable_entries if e.identifier in ['0', '2', '9', '14', '15']]
+	# selected_entries = [e for e in repo_man.buildable_entries if e.identifier in ['16', '0', '2', '9', '14', '15']]
+	selected_entries = [e for e in repo_man.buildable_entries if e.identifier in ['16', '0', '2', '9', '14', '15']]
+	selected_entries.reverse()
 
 	for entry in selected_entries:
 		print(f">>>>> repo: [{entry.identifier}] {entry.git_url}  I'll average {RUNTIME_AVERAGER_SET_SIZE} runs.")
@@ -241,10 +243,10 @@ def main() -> None:
 			outfile = os.path.join(OUTPUT_DIR, f"{entry.identifier}_{os.path.basename(mapfile)}")
 			mapfile_fullpath = f"{MAPS_DIR}/{mapfile}"
 			print(f"{mapfile :<{20}} -- size: {humanize.naturalsize(os.path.getsize(mapfile_fullpath))}")
-			# profile_bsq_runtime(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.STDIN)
-			# profile_bsq_runtime(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.FILENAME)
-			profile_bsq_memory_usage(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.STDIN)
-			profile_bsq_memory_usage(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.FILENAME)
+			profile_bsq_runtime(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.STDIN)
+			profile_bsq_runtime(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.FILENAME)
+			# profile_bsq_memory_usage(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.STDIN)
+			# profile_bsq_memory_usage(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.FILENAME)
 		kill_all_bsq()
 		
 		# profile_bsq_memory_usage(entry.binary_path, )

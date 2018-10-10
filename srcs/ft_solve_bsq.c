@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 14:16:12 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 14:53:58 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,17 @@
 #include <unistd.h>
 
 
-void	is_largest_square()
+void	is_largest_square();
 
 /*
 **	grow the square if there is space on prior lines.  Returns a solution if
 **	and only if the square is bigger than the existing largest square.
 */
 
-void	check_prior_lines(t_head *this_line, t_line *space)
+void	check_prior_lines(t_line *this_line, t_spacenode *space)
 {
-
+	this_line = 0; 
+	space = 0;
 }
 
 /*
@@ -34,22 +35,17 @@ void	check_prior_lines(t_head *this_line, t_line *space)
 
 void	ft_find_biggest_square(t_parser_state *state)
 {
-	t_head	*this_line;
-	t_head	*prior_line;
-	t_line	*space;
+	t_line		*this_line;
+	t_spacenode	*node;
 
-	head = state->head_list;
-	while (head)
+	while ((this_line = (state->lines)++))
 	{
-		space = head->line;
-		while (space)
+		while ((node = (this_line->nodes)++))
 		{
 			// iterate up through previous head to see how big the square is.
-
-			if space->
-			space = space->next;
+			;
 		}
-		head = head->next;
+		;
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bsq_parser.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 02:42:36 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 14:13:53 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 14:52:32 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int			ft_parse_header(char buf[BUF_SIZE + 1], t_parser_state *state)
 	state->buf_i = read_bsq_header(buf, &state->file_info);
 	if (state->buf_i == FAILED)
 		return (FAILED);
-	state->head_list = malloc(sizeof(t_head) * state->file_info.height);
-	if (state->head_list == NULL)
+	state->lines = malloc(sizeof(t_line) * state->file_info.height);
+	if (state->lines == NULL)
 		return (FAILED);
 	return (SUCCESS);
 }
@@ -76,8 +76,8 @@ int			ft_parse_next_space(char *start, t_parser_state *state)
 	{
 		state->curr_node =
 			create_line_node(&state->curr_node, state->position, space_len);
-		if (!state->head_list[state->line_number].line)
-			state->head_list[state->line_number].line = state->curr_node;
+		if (!state->lines[state->line_number].nodes)
+			state->lines[state->line_number].nodes = state->curr_node;
 		state->position += space_len;
 	}
 	else

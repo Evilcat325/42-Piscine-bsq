@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 17:02:42 by seli              #+#    #+#             */
-/*   Updated: 2018/10/09 17:04:06 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 00:21:52 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_error.h"
+#include "ft_bsq.h"
+#include <unistd.h>
 
-int		ft_error_open(int fd)
+int		ft_map_error(void)
 {
 	write(1, "map error\n", 10);
+	return (0);
 }

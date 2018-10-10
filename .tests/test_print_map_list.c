@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bsq_util.h                                      :+:      :+:    :+:   */
+/*   test_print_map_list.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/09 20:53:23 by nkirkby           #+#    #+#             */
-/*   Updated: 2018/10/09 22:00:07 by nkirkby          ###   ########.fr       */
+/*   Created: 2018/10/09 21:31:51 by seli              #+#    #+#             */
+/*   Updated: 2018/10/10 00:31:21 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_BSQ_UTIL_H
-# define FT_BSQ_UTIL_H
+#include "../includes/ft_bsq.h"
+#include <stdio.h>
 
-# include "ft_define.h"
+void	ft_print_map_list(t_head *head)
+{
+	t_line		*node;
 
-int	read_bsq_header(char *str, t_file_info *info);
-
-#endif
+	node = NULL;
+	while (head)
+	{
+		node = head->line;
+		while (node)
+		{
+			printf("index: %d, length: %d |", node->index, node->length);
+			node = node->next;
+		}
+		printf("\n");
+		head = head->next;
+	}
+}

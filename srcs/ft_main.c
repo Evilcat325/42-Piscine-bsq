@@ -3,25 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:28:24 by seli              #+#    #+#             */
-/*   Updated: 2018/10/09 23:00:54 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 00:27:45 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_main.h"
+#include "ft_bsq.h"
 
 int		main(int argc, char **argv)
 {
 	int		i;
 
 	i = 1;
-	g_info.empty = '.';
-	g_info.obstacle = 'o';
-	g_info.full = 'x';
-	if (argc < 2)
-		return (0);
+	if (argc < 2 || !read_bsq_header(argv[1], &g_info))
+		return (ft_map_error());
 	while (i < argc)
 	{
 		ft_solve_bsq(argv[i]);

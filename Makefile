@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: seli <seli@student.42.fr>                  +#+  +:+       +#+         #
+#    By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/09 16:23:54 by seli              #+#    #+#              #
-#    Updated: 2018/10/09 22:54:05 by seli             ###   ########.fr        #
+#    Updated: 2018/10/10 00:32:17 by nkirkby          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ CFLAGS = -Wall -Wextra -Werror -I$(IDIR)
 IDIR = ./includes
 SRCDIR = srcs
 
-SOURCES = ft_main.c ft_data.c ft_stdio.c ft_string.c ft_test.c \
-			ft_solve_bsq.c
+SOURCES = ft_main.c ft_data.c ft_stdio.c ft_string.c \
+			ft_solve_bsq.c ft_error.c ft_bsq_util.c
 SOURCES := $(SOURCES:%=$(SRCDIR)/%)
 
 

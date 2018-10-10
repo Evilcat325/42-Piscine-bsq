@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_solve_bsq.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 00:20:38 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 00:34:38 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_solve_bsq.h"
+#include "ft_bsq.h"
+#include <fcntl.h>
+#include <stdio.h>
+#include <unistd.h>
 
 void	ft_solve_bsq(char *filename)
 {

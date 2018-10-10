@@ -6,11 +6,12 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 20:31:37 by seli              #+#    #+#             */
-/*   Updated: 2018/10/09 22:12:55 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 00:33:04 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_stdio.h"
+#include "ft_bsq.h"
+#include <stdio.h>
 
 #define IS_DIGIT(X) (X >= '0' && X <= '9')
 #define IS_SIGN(X) (X == '+' || X == '-')
@@ -43,4 +44,22 @@ int	ft_atoi_ptr(char *str, int *out)
 	output *= sign;
 	*out = (output);
 	return (0);
+}
+
+void	ft_print_map_list(t_head *head)
+{
+	t_line		*node;
+
+	node = NULL;
+	while (head)
+	{
+		node = head->line;
+		while (node)
+		{
+			printf("index: %d, length: %d |", node->index, node->length);
+			node = node->next;
+		}
+		printf("\n");
+		head = head->next;
+	}
 }

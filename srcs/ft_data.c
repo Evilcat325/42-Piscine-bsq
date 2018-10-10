@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_data.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 18:33:34 by seli              #+#    #+#             */
-/*   Updated: 2018/10/09 23:47:16 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 00:27:46 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_data.h"
+#include "ft_bsq.h"
+#include <stdlib.h>
 
 t_head		*create_head_node(t_head **prev)
 {

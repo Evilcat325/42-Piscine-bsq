@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_solve_bsq.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 03:36:50 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 10:28:00 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
+
+void	ft_find_biggest_square(char);
 
 int		ft_solve_bsq(char *filename)
 {
@@ -28,6 +30,7 @@ int		ft_solve_bsq(char *filename)
 		return (ft_map_error("FAILED TO PAAAARSE"));
 	close(fd);
 	ft_print_map_list(&state);
+	ft_print_map(&state);
 	// free the memory;
 	return (0);
 }

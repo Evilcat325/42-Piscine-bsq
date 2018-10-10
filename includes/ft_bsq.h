@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bsq.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:34:51 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 03:38:09 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 10:28:28 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ int					ft_space_len(char *str, int	*break_in_line);
 int					ft_obstacle_len(char *str, int *break_in_line);
 
 void				ft_print_map_list(t_parser_state *state);
+void				ft_print_map(t_parser_state *state);
 
 #endif

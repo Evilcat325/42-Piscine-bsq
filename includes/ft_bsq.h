@@ -43,6 +43,10 @@ typedef struct		s_file_info
 	char			full;
 }					t_file_info;
 
+/*
+**	buf_i : buffer index
+*/
+
 typedef struct		s_parser_state
 {
 	int				buf_i;

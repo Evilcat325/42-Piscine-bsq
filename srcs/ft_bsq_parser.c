@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 02:42:36 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 12:15:09 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 13:44:43 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,7 @@ void		ft_parse_line(char buf[BUF_SIZE + 1], t_parser_state *state)
 		if (state->break_in_line)
 			break ;
 	}
-	if (state->break_in_line)
-	{
-		;
-	}
-	else
+	if (!state->break_in_line)
 	{
 		if (g_info.width == 0)
 			g_info.width = state->position;

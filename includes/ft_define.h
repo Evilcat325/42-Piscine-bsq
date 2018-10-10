@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_define.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:34:51 by seli              #+#    #+#             */
-/*   Updated: 2018/10/09 20:27:16 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/09 20:50:27 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,12 @@ typedef struct		s_file_information
 	char			full;
 }					t_file_information;
 
-t_file_information	g_info;
+t_file_information	g_info = {
+	.height = 0,
+	.width = 0,
+	.empty = '.',
+	.obstacle = 'o',
+	.full = 'x',
+}
 
 #endif

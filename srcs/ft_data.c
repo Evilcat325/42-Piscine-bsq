@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_data.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 18:33:34 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 14:52:59 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 15:40:48 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ void		ft_initialize_new_line(t_parser_state *state)
 {
 	state->position = 0;
 	state->break_position = 0;
-	state->curr_node = 0;
+	state->curr_node = NULL;
 	state->lines[state->line_number].nodes = NULL;
 	state->lines[state->line_number].search = NULL;
 }
 
-t_spacenode		*create_line_node(t_spacenode **prev, int position, int empty_len)
+t_spacenode	*create_line_node(t_spacenode **prev, int position, int empty_len)
 {
 	t_spacenode	*curr;
 

@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 20:53:18 by nkirkby           #+#    #+#             */
-/*   Updated: 2018/10/10 16:07:10 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 16:14:36 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		read_bsq_header(char *str, t_file_info *info)
 
 	end_of_line = 0;
 	while (str[end_of_line] != '\n' && end_of_line <= 15)
-		if (str[end_of_line++] = 0)
+		if (str[end_of_line++] == '\0')
 			return (ft_map_error("premature end of file in header"));
 	if (end_of_line > 14)
 		return (ft_map_error("header longer than expected"));
@@ -48,7 +48,7 @@ int		read_bsq_header(char *str, t_file_info *info)
 	line_number_descriptor[i] = '\0';
 	while (--i >= 0)
 		line_number_descriptor[i] = str[i];
-	if (ft_atoi_ptr(line_number_descriptor, &(info->height)))
+	if (ft_atoi_ptr(line_number_descriptor, &(info->height)) == FAILED)
 		return (FAILED);
 	if ((end_of_line < 4) || info->height <= 0)
 		return (ft_map_error("header shorter than expected || height <= 0"));

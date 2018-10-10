@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bsq.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:34:51 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 10:28:28 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 14:13:37 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,13 @@ typedef struct		s_file_info
 	char			full;
 }					t_file_info;
 
+typedef struct		s_square_info
+{
+	int				row;
+	int				col;
+	int				square_size;
+}					t_square_info;
+
 /*
 **	buf_i : buffer index
 */
@@ -56,9 +63,9 @@ typedef struct		s_parser_state
 	int				line_number;
 	t_head			*head_list;
 	t_line			*curr_node;
+	t_file_info		file_info;
+	t_square_info	square_info;
 }					t_parser_state;
-
-t_file_info			g_info;
 
 void				ft_initialize_parser_state(t_parser_state *state);
 void				ft_initialize_new_line(t_parser_state *state);
@@ -80,8 +87,8 @@ int					ft_map_error(char *msg);
 int					ft_solve_bsq(char *filename);
 int					ft_parse_bsq(int fd, t_parser_state *state);
 int					ft_atoi_ptr(char *str, int *out);
-int					ft_space_len(char *str, int	*break_in_line);
-int					ft_obstacle_len(char *str, int *break_in_line);
+int					ft_space_len(char *str, t_parser_state *state);
+int					ft_obstacle_len(char *str, t_parser_state *state);
 
 void				ft_print_map_list(t_parser_state *state);
 void				ft_print_map(t_parser_state *state);

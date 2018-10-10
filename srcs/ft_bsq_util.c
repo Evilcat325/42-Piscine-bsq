@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bsq_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 20:53:18 by nkirkby           #+#    #+#             */
-/*   Updated: 2018/10/10 12:03:34 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 14:07:36 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int		read_bsq_header(char *str, t_file_info *info)
 	info->full = str[--i];
 	info->obstacle = str[--i];
 	info->empty = str[--i];
+	// should check if i went over INTMAX len + 3;
 	if (map_characters_are_not_unique(info))
 		return (ft_map_error("map characters are not unique"));
 	line_number_descriptor[i - 1] = '\0';

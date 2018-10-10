@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bsq_parser.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 02:42:36 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 13:44:43 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 14:13:53 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int			ft_parse_bsq(int fd, t_parser_state *state)
 	while ((result = read(fd, buf, BUF_SIZE)))
 	{
 		buf[result] = 0;
-		if (g_info.height == 0 && (ft_parse_header(buf, state) == FAILED))
+		if (state->file_info.height == 0
+			&& (ft_parse_header(buf, state) == FAILED))
 			return (FAILED);
 		while (buf[state->buf_i])
 			ft_parse_line(buf, state);
@@ -34,10 +35,10 @@ int			ft_parse_bsq(int fd, t_parser_state *state)
 
 int			ft_parse_header(char buf[BUF_SIZE + 1], t_parser_state *state)
 {
-	state->buf_i = read_bsq_header(buf, &g_info);
+	state->buf_i = read_bsq_header(buf, &state->file_info);
 	if (state->buf_i == FAILED)
 		return (FAILED);
-	state->head_list = malloc(sizeof(t_head) * g_info.height);
+	state->head_list = malloc(sizeof(t_head) * state->file_info.height);
 	if (state->head_list == NULL)
 		return (FAILED);
 	return (SUCCESS);
@@ -57,8 +58,8 @@ void		ft_parse_line(char buf[BUF_SIZE + 1], t_parser_state *state)
 	}
 	if (!state->break_in_line)
 	{
-		if (g_info.width == 0)
-			g_info.width = state->position;
+		if (state->file_info.width == 0)
+			state->file_info.width = state->position;
 		state->line_number += 1;
 		state->buf_i += 1;
 	}
@@ -70,7 +71,7 @@ int			ft_parse_next_space(char *start, t_parser_state *state)
 	int		space_len;
 	int		obstcale_len;
 
-	space_len = ft_space_len(start, &state->break_in_line);
+	space_len = ft_space_len(start, state);
 	if (space_len != 0)
 	{
 		state->curr_node =
@@ -81,7 +82,7 @@ int			ft_parse_next_space(char *start, t_parser_state *state)
 	}
 	else
 	{
-		obstcale_len = ft_obstacle_len(start, &state->break_in_line);
+		obstcale_len = ft_obstacle_len(start, state);
 		state->position += obstcale_len;
 	}
 	return (SUCCESS);
@@ -95,7 +96,7 @@ int			ft_parse_continue(char *start, t_parser_state *state)
 	if (state->break_in_line == BREAK_IN_EMPTY)
 	{
 		state->break_in_line = FALSE;
-		space_len = ft_space_len(start, &state->break_in_line);
+		space_len = ft_space_len(start, state);
 		state->curr_node->length += space_len;
 		state->position += space_len;
 	}

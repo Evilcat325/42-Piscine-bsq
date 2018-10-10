@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bsq_parser.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 02:42:36 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 03:46:51 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 12:15:09 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,28 @@ int			ft_parse_header(char buf[BUF_SIZE + 1], t_parser_state *state)
 
 void		ft_parse_line(char buf[BUF_SIZE + 1], t_parser_state *state)
 {
-	if (state->break_in_line == FALSE)
-		ft_initialize_new_line(state);
-	else
+	if (state->break_in_line)
 		ft_parse_continue(&buf[state->buf_i], state);
-	while (buf[INDEX(state)] != '\n' && !state->break_in_line)
+	else
+		ft_initialize_new_line(state);
+	while (buf[INDEX(state)] != '\n')
+	{
 		ft_parse_next_space(&buf[INDEX(state)], state);
-	state->line_number += state->break_in_line ? 0 : 1;
+		if (state->break_in_line)
+			break ;
+	}
+	if (state->break_in_line)
+	{
+		;
+	}
+	else
+	{
+		if (g_info.width == 0)
+			g_info.width = state->position;
+		state->line_number += 1;
+		state->buf_i += 1;
+	}
 	state->buf_i += state->position - state->break_position;
-	state->buf_i += (state->break_in_line ? 0 : 1);
 }
 
 int			ft_parse_next_space(char *start, t_parser_state *state)

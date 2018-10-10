@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 20:53:18 by nkirkby           #+#    #+#             */
-/*   Updated: 2018/10/09 22:13:08 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/09 22:30:25 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	read_bsq_header(char *str, t_file_info *info)
 	end_of_line = 0;
 	while (str[end_of_line] && str[end_of_line] != '\n')
 		end_of_line++;
+	if (end_of_line < 4)
+		return (-1);
 	info->full = str[--end_of_line];
 	info->obstacle = str[--end_of_line];
 	info->empty = str[--end_of_line];

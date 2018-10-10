@@ -7,6 +7,8 @@ int main()
 	char header_1[] = "10000.ox";
 	char header_2[] = "12345678";
 	char header_3[] = "f00bar";
+	char header_4[] = "1af";
+	char header_5[] = "";
 	int err;
 
 	t_file_info	info;
@@ -31,5 +33,11 @@ int main()
 	ASSERT_EQUAL(info.height, 12345);
 
 	err = read_bsq_header(header_3, &info);
+	ASSERT_NOT_EQUAL(err, 0);
+
+	err = read_bsq_header(header_4, &info);
+	ASSERT_NOT_EQUAL(err, 0);
+
+	err = read_bsq_header(header_5, &info);
 	ASSERT_NOT_EQUAL(err, 0);
 }

@@ -98,7 +98,7 @@ class BSQMap(object):
 		self._basename = f"map_{x}_{y}_{density}"
 		self.path = f"{MAPS_DIR}/{self._basename}"
 		with open(self.path, "w") as outfile:
-			subprocess.check_call(["perl", "../gen_map.pl", 
+			subprocess.check_call(["perl", "gen_map.pl", 
 			str(x), str(y), str(self.density)], stdout=outfile)
 
 	def __str__(self):

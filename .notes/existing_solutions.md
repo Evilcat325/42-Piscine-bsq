@@ -21,6 +21,7 @@ I'm using RSS/filesize as the metric for comparison.  This shows how memory cons
 | 2 | 2.17 |
 | 9 | 2.43 |
 | 14 | 2.43 |
+| 15 | 2.43 |
 
 # Speed
 | repo id | max solve time (s) (100x50000) |
@@ -30,62 +31,83 @@ I'm using RSS/filesize as the metric for comparison.  This shows how memory cons
 | 0 | 0.292 |
 | 15 | 0.324 |
 
-# We can malloc absurd amounts of data, but it only shows up in `top/htop` when it is used.
-e.g.
+# Observations
+## 0
+### Use of global variables --> to reduce stack size?
+(comments my own)
 ```
+int g_i;
+int g_l;
+int g_k;
 
-#include <stdlib.h>
-
-#define ONE_THOUSAND 1000
-#define TEN_M (10 * ONE_THOUSAND * ONE_THOUSAND)
-
-int main()
+void	solve(t_bitset **map)
 {
-    char *stuff;
+	int s;
 
-    stuff = malloc(TEN_M);
-    while (1)
-    {
-        ;
-    }
-}
-```
-has a RSS < 1 MiB (800 KiB reported by `htop`, 304 K reported by `top`)
-
-
-but this uses the full 10M:
-```
-int main()
-{
-    char *stuff;
-
-    stuff = malloc(TEN_M);
-    for (int i = 0; i < TEN_M; i++)
-    {
-        stuff[i] = 0;
-    }
-    while (1)
-    {
-        ;
-    }
+	g_i = 0;  // only initialized here
+	g_l = 0;
+	g_k = 0;
+	g_search_size = 1;
+	while (g_i + g_search_size <= g_n)
+	{
+		while (g_l < g_search_size - 1)
+			bs_shift(&(map[g_i + g_l++]));
+		while (g_k < g_search_size - 1)
+		{
+			bs_shift(&(map[g_i + g_search_size - 1]));
+			g_k++;
+		}
+		s = 1;
+		while (s < g_search_size)
+			bs_and(map[g_i], map[g_i + s++]);
+		check_existence(existence(map[g_i], g_i), map);
+	}
 }
 ```
 
-and this uses only 5M!
+What?!
+Is this bitwise XOR actually faster than a (more readable) inequality check??
+
+0.255, 0.230, 0.312
+![](2018-10-09-16-39-11.png)
+
+0.242, 0.304, 0.325
+![](2018-10-09-16-41-36.png)
+
+Hmm, these results are buried in the noise.  Not statistically significant.  That is the only place this bitwise XOR is used in this project.
+
+### 
+
+`g_str` is malloc'd 16 bytes
+`buff` is bitshifted right by one every time 16, 32, 64, ... additional bytes are read.
+
+read() only reads one byte at a time!
 
 ```
-int main()
+t_bitset	*init_first_line(int fd)
 {
-    char *stuff;
+	unsigned int i;
+	unsigned int buff;
 
-    stuff = malloc(TEN_M);
-    for (int i = 0; i < TEN_M / 2; i++)
-    {
-        stuff[i] = 0;
-    }
-    while (1)
-    {
-        ;
-    }
+	buff = 16;
+	g_str = (char *)malloc(sizeof(char) * buff);
+	i = 0;
+	while (read(fd, &g_str[i], 1) && g_str[i] ^ '\n')
+	{
+		if (i + 1 == buff)
+		{
+			buff <<= 1;
+			g_str = str_realloc_double(g_str, buff);
+		}
+		i++;
+	}
+	g_numlongs = i / 64 + (i % 64 != 0);
+	g_len = i;
+	if (g_len == 0)
+		return ((void *)0);
+	return (init_bitset_from_str(g_str));
 }
 ```
+
+## 2 
+entire string is read into memory.  

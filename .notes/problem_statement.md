@@ -36,8 +36,10 @@ if more than one soln, choose the most top-left square.
   - display `"map error\n"`
   - consume the next map
   
-## Todo:
+## Potential Low hanging fruit -- pending confirmation:
 
+- O3 optimization
+  - read about additional compiler opimizations
 - one giant malloc to reduce number of system calls
-- packing bits 
+- packing bits
 

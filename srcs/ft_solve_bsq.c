@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/09 22:44:40 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/09 22:56:08 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,6 @@ int		ft_parse_bsq(char *filename, t_head **head)
 			i += position - break_position + 1;
 		}
 	}
+	close(fd);
 	return (SUCCESS);
 }

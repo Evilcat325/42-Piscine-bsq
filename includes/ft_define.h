@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:34:51 by seli              #+#    #+#             */
-/*   Updated: 2018/10/09 22:56:34 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 00:19:07 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define FALSE 0
 # define SUCCESS 1
 # define FAILED 0
-# define BUF_SIZE 4096
+# define BUF_SIZE 1
 # define BREAK_IN_EMPTY 1
 # define BREAK_IN_OBSTACLE 2
 

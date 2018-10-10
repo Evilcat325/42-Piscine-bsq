@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 21:31:51 by seli              #+#    #+#             */
-/*   Updated: 2018/10/09 22:41:37 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/09 23:51:11 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@ void	ft_print_map_list(t_head *head)
 {
 	t_line		*node;
 
+	node = NULL;
 	while (head)
 	{
 		node = head->line;
 		while (node)
 		{
-			printf("index: %d, length: %d | ", node->index, node->length);
+			printf("index: %d, length: %d |", node->index, node->length);
 			node = node->next;
 		}
 		printf("\n");

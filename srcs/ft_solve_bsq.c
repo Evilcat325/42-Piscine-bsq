@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/09 22:56:08 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 00:20:38 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	ft_solve_bsq(char *filename)
 {
-	t_head				*head;
+	t_head	*head;
 
-	head = 0;
+	head = NULL;
 	ft_parse_bsq(filename, &head);
-	// if (ft_parse_bsq(filename, &head) == FAILED)
-	// 	return ;
+	if (ft_parse_bsq(filename, &head) == FAILED)
+		return ;
 	ft_print_map_list(head);
 }
 
@@ -30,6 +30,7 @@ int		ft_parse_bsq(char *filename, t_head **head)
 	int		position;
 	int		break_position;
 	int		space_len;
+	int		obstcale_len;
 	int		result;
 	int		break_in_line;
 	char	buf[BUF_SIZE + 1];
@@ -43,6 +44,7 @@ int		ft_parse_bsq(char *filename, t_head **head)
 	curr_head = NULL;
 	while ((result = read(fd, buf, BUF_SIZE)))
 	{
+		buf[result] = 0;
 		i = 0;
 		while (buf[i])
 		{
@@ -50,7 +52,7 @@ int		ft_parse_bsq(char *filename, t_head **head)
 			{
 				position = 0;
 				break_position = 0;
-				curr_head = create_head_node(curr_head);
+				curr_head = create_head_node(&curr_head);
 				curr_node = NULL;
 				if (!*head)
 					*head = curr_head;
@@ -60,23 +62,31 @@ int		ft_parse_bsq(char *filename, t_head **head)
 				break_position = position;
 				if (break_in_line == BREAK_IN_EMPTY)
 				{
+					break_in_line = FALSE;
 					space_len = ft_space_len(&buf[i], &break_in_line);
 					curr_node->length += space_len;
 					position += space_len;
 				}
-				break_in_line = FALSE;
+				else
+					break_in_line = FALSE;
 			}
-			while (buf[i + position - break_position] != '\n')
+			while (buf[i + position - break_position] != '\n' && !break_in_line)
 			{
 				space_len = ft_space_len(&buf[i + position - break_position], &break_in_line);
 				if (space_len != 0)
-					curr_node = create_line_node(curr_node, position, space_len);
-				if (!curr_head->line && curr_node)
-					curr_head->line = curr_node;
-				position += space_len == 0 ?
-					ft_obstacle_len(&buf[i + position - break_position], &break_in_line) : space_len;
+				{
+					curr_node = create_line_node(&curr_node, position, space_len);
+					position += space_len;
+					if (!curr_head->line)
+						curr_head->line = curr_node;
+				}
+				else
+				{
+					obstcale_len = ft_obstacle_len(&buf[i + position - break_position], &break_in_line);
+					position += obstcale_len;
+				}
 			}
-			i += position - break_position + 1;
+			i += position - break_position + (break_in_line ? 0 : 1);
 		}
 	}
 	close(fd);

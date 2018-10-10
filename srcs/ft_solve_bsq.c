@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 01:00:49 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 01:08:19 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,16 @@
 #include <stdio.h>
 #include <unistd.h>
 
-void	ft_solve_bsq(char *filename)
+int		ft_solve_bsq(char *filename)
 {
 	t_head	*head;
 
 	head = NULL;
 	ft_parse_bsq(filename, &head);
 	if (ft_parse_bsq(filename, &head) == FAILED)
-		return ;
+		return (ft_map_error());
 	ft_print_map_list(head);
+	return (0);
 }
 
 int		ft_parse_bsq(char *filename, t_head **head)

@@ -9,6 +9,12 @@ int main()
 	char header_3[] = "f00bar";
 	char header_4[] = "1af";
 	char header_5[] = "";
+	char header_6[] = "123\n";  // invalid
+	char header_7[] = "1234\n"; // valid
+	char header_8[] = "a234\n"; // invalid
+	char header_8[] = "+2345\n"; // valid
+	char header_8[] = "-2345\n"; // valid
+
 	int err;
 
 	t_file_info	info;

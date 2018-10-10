@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:34:51 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 00:34:12 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 01:06:24 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_line				*create_line_node(t_line **prev, int position,
 
 int					read_bsq_header(char *str, t_file_info *info);
 int					ft_map_error(void);
-void				ft_solve_bsq(char *filename);
+int					ft_solve_bsq(char *filename);
 int					ft_parse_bsq(char *filename, t_head **head);
 int					ft_atoi_ptr(char *str, int *out);
 int					ft_space_len(char *str, int	*break_in_line);

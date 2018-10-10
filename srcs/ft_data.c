@@ -6,14 +6,14 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 18:33:34 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 02:58:12 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 14:06:51 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_bsq.h"
 #include <stdlib.h>
 
-void	ft_initialize_parser_state(t_parser_state *state)
+void		ft_initialize_parser_state(t_parser_state *state)
 {
 	state->buf_i = 0;
 	state->position = 0;
@@ -21,6 +21,15 @@ void	ft_initialize_parser_state(t_parser_state *state)
 	state->break_in_line = FALSE;
 	state->line_number = 0;
 	state->curr_node = NULL;
+	state->head_list = NULL;
+	state->file_info.empty = 0;
+	state->file_info.full = 0;
+	state->file_info.obstacle = 0;
+	state->file_info.height = 0;
+	state->file_info.width = 0;
+	state->square_info.col = 0;
+	state->square_info.row = 0;
+	state->square_info.square_size = 0;
 }
 
 void		ft_initialize_new_line(t_parser_state *state)

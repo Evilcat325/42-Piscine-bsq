@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_stdio.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 20:31:37 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 12:15:46 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 14:12:33 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,19 @@ void	ft_print_map(t_parser_state *state)
 		{
 			while (i < node->index)
 			{
-				write(1, &g_info.obstacle, 1);
+				write(1, &state->file_info.obstacle, 1);
 				i++;
 			}
 			while (i < node->index + node->length)
 			{
-				write(1, &g_info.empty, 1);
+				write(1, &state->file_info.empty, 1);
 				i++;
 			}
 			node = node->next;
 		}
-		while (i < g_info.width)
+		while (i < state->file_info.width)
 		{
-			write(1, &g_info.obstacle, 1);
+			write(1, &state->file_info.obstacle, 1);
 			i++;
 		}
 		write(1, "\n", 1);

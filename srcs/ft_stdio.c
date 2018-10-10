@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 20:31:37 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 14:53:28 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 14:56:46 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	ft_print_map(t_parser_state *state)
 	int			line;
 	int			i;
 	t_spacenode	*node;
+	// char		*empty;
+	// char		*obstcale;
 
 	line = 0;
 	while (line < state->line_number)

@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:34:51 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 14:52:40 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 14:57:26 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_spacenode				*create_line_node(t_spacenode **prev, int position,
 int						ft_parse_bsq(int fd, t_parser_state *state);
 int						ft_parse_header(char buf[BUF_SIZE + 1],
 										t_parser_state *state);
-void					ft_parse_line(char buf[BUF_SIZE + 1],
+int						ft_parse_line(char buf[BUF_SIZE + 1],
 										t_parser_state *state);
 int						ft_parse_next_space(char *start,
 										t_parser_state *state);

@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/09 22:18:25 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/09 22:44:40 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ void	ft_solve_bsq(char *filename)
 {
 	t_head				*head;
 
-	if (ft_parse_bsq(filename, &head) == FAILED)
-		return ;
+	head = 0;
+	ft_parse_bsq(filename, &head);
+	// if (ft_parse_bsq(filename, &head) == FAILED)
+	// 	return ;
 	ft_print_map_list(head);
 }
 
@@ -69,13 +71,13 @@ int		ft_parse_bsq(char *filename, t_head **head)
 				space_len = ft_space_len(&buf[i + position - break_position], &break_in_line);
 				if (space_len != 0)
 					curr_node = create_line_node(curr_node, position, space_len);
-				if (!curr_head->line)
+				if (!curr_head->line && curr_node)
 					curr_head->line = curr_node;
 				position += space_len == 0 ?
 					ft_obstacle_len(&buf[i + position - break_position], &break_in_line) : space_len;
 			}
-			i += position - break_position;
+			i += position - break_position + 1;
 		}
 	}
-	return (0);
+	return (SUCCESS);
 }

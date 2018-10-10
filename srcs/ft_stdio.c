@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 20:31:37 by seli              #+#    #+#             */
-/*   Updated: 2018/10/09 20:33:06 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/09 20:38:29 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ int	ft_atoi(char *str)
 
 	output = 0;
 	sign = 1;
+	while (*str == ' ')
+		str++;
 	if (!(IS_DIGIT(*str) || IS_SIGN(*str)))
 		return (0);
 	if (IS_SIGN(*str))
 		sign = *str++ == '-' ? -1 : 1;
 	if (!IS_DIGIT(*str))
 		return (0);
-	while (*str == '0')
-		str++;
 	while (*str && IS_DIGIT(*str))
 	{
 		output *= 10;

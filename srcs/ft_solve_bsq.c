@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 01:08:19 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 03:21:29 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		ft_solve_bsq(char *filename)
 	head = NULL;
 	ft_parse_bsq(filename, &head);
 	if (ft_parse_bsq(filename, &head) == FAILED)
-		return (ft_map_error());
+		return (ft_map_error("parsing failed"));
 	ft_print_map_list(head);
 	return (0);
 }

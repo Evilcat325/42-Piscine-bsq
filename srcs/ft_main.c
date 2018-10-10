@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:28:24 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 01:05:49 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 03:20:50 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		main(int argc, char **argv)
 
 	i = 1;
 	if (argc < 2)
-		return (ft_map_error());
+		return (ft_map_error("too few args"));
 	while (i < argc)
 	{
 		ft_solve_bsq(argv[i]);

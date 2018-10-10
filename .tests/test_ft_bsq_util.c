@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "../srcs/ft_bsq_util.c"
+#include "../.debug/ft_error.c"
 #include "../srcs/ft_stdio.c"
 #include "rag.h"
 

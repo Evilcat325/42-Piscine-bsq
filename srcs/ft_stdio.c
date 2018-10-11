@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_stdio.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 20:31:37 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 22:35:03 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 22:39:27 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	ft_print_line(t_string_state *strings, t_parser_state *state,
 	t_spacenode		*node;
 
 	node = state->lines[line].nodes;
-	if (node->index != 0)
+	if (node && node->index != 0)
 		write(1, strings->obstacle, node->index);
 	while (node)
 	{

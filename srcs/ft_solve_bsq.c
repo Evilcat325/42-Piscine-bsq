@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 19:44:31 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 20:13:29 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,31 @@
 **	range at x-position index.
 */
 
-int			line_is_empty_in_range(t_spacenode *node, int index, int range)
+void	update_biggest_square(t_search_state *state, int size, int row, int col)
 {
+	printf("recording new biggest square (size %d) at col: %d\trow: %d\n",
+			size, col, row);
+	state->biggest_square->col = col;
+	state->biggest_square->row = row;
+	state->biggest_square->size = size;
+}
+
+int		ft_check_space(t_search_state *state, int size, int row, int col)
+{
+	t_spacenode	*node;
+
+	if (!&state->lines[row])
+		return (FAILED);
+	node = state->lines[row].nodes;
 	while (node)
 	{
-		if (index < LEFT_LIMIT(node))
+		if (node->index > col)
 			return (FAILED);
-		else if ((index + range) <= (RIGHT_LIMIT(node)))
+		if (LEFT_LIMIT(node) <= col && col + size < RIGHT_LIMIT(node))
 			return (SUCCESS);
 		node = node->next;
 	}
 	return (FAILED);
-}
-
-void	update_biggest_square(t_search_state* state, int size, int row, int col)
-{
-	printf("recording new biggest square (size %d) at col: %d\trow: %d\n", size, col, row);
-	state->biggest_square->col = col;
-	state->biggest_square->row = row;
-	state->biggest_square->size = size;
 }
 
 /*
@@ -55,27 +61,34 @@ void	update_biggest_square(t_search_state* state, int size, int row, int col)
 void	grow_square(t_search_state *state, const t_spacenode *node)
 {
 	int	square_size;
-	int row;
+	int backward_row;
 	int	col;
+	int	found;
 
-	square_size = state->biggest_square->size;
-	col = node->index;
+	square_size = state->biggest_square->size + 1;
+	col = 0;
 	while (col + state->biggest_square->size < RIGHT_LIMIT(node))
 	{
-		row = state->current_row;
-		while (line_is_empty_in_range(&(state->lines[row].nodes[0]),
-										node->index, square_size) && row > 0)
+		found = SUCCESS;
+		backward_row = 0;
+		while (backward_row < square_size && state->current_row - backward_row >= 0)
 		{
-			printf("current row: %d\n", row);
-			if (state->current_row - row + 1 > square_size)
+			if (ft_check_space(state, square_size,
+					state->current_row - backward_row, LEFT_LIMIT(node) + col))
 			{
-				printf("current row: %d, row: %d, square_size: %d\n", state->current_row, row, square_size);
-				update_biggest_square(state, state->current_row - row,
-										row, col);
+				found = FAILED;
+				break ;
 			}
-			row--;
+			backward_row++;
 		}
-		col++;
+		if (found == SUCCESS)
+		{
+			update_biggest_square(state, square_size,
+					state->current_row, LEFT_LIMIT(node) + col);
+			square_size++;
+		}
+		else
+			col++;
 	}
 }
 
@@ -109,7 +122,7 @@ int			ft_solve_bsq(char *filename)
 {
 	int				fd;
 	t_parser_state	parser_state;
-	t_search_state  search_state;
+	t_search_state	search_state;
 
 	ft_initialize_parser_state(&parser_state);
 	fd = open(filename, O_RDONLY);
@@ -122,7 +135,5 @@ int			ft_solve_bsq(char *filename)
 	ft_print_map_list(&parser_state);
 	ft_initialize_search_state(&search_state, &parser_state);
 	ft_find_biggest_square(&search_state);
-
-	// free the memory;
 	return (0);
 }

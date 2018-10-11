@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 19:32:42 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 19:35:02 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ int			line_is_empty_in_range(t_spacenode *node, int index, int range)
 	{
 		if (index < LEFT_LIMIT(node))
 			return (FAILED);
-		else if (index >= LEFT_LIMIT(node) &&
-				(index + range) <= (RIGHT_LIMIT(node)))
+		else if ((index + range) <= (RIGHT_LIMIT(node)))
 			return (SUCCESS);
 		node = node->next;
 	}

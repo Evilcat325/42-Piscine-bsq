@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 20:31:37 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 21:05:25 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 21:09:10 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,9 @@ void	ft_print_solution(t_parser_state *state, t_square *biggest_square)
 		i = 0;
 		while (node)
 		{
-			while (i < node->index)
+			while (i++ < node->index)
 			{
 				write(1, &state->file_info.obstacle, 1);
-				i++;
 			}
 			while (i < node->index + node->length)
 			{

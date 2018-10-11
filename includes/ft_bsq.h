@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:34:51 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 21:00:42 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 21:08:36 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,13 @@ int						ft_parse_continue(char *start,
 
 int						read_bsq_header(char *str, t_file_info *info);
 int						ft_map_error(char *msg);
-int						ft_solve_bsq(char *filename);
+int						ft_solve_bsq(int fd);
+int						ft_check_space(t_search_state *state,
+										int size, int row, int col);
+void					grow_square(t_search_state *state,
+									const t_spacenode *node);
+void					ft_find_biggest_square(t_search_state *state);
+
 int						ft_parse_bsq(int fd, t_parser_state *state);
 int						ft_atoi_ptr(char *str, int *out);
 int						ft_space_len(char *str, t_parser_state *state);
@@ -123,6 +129,7 @@ int						ft_obstacle_len(char *str, t_parser_state *state);
 
 void					ft_print_map_list(t_parser_state *state);
 void					ft_print_map(t_parser_state *state);
-void					ft_print_solution(t_parser_state *state, t_square *biggest_square);
+void					ft_print_solution(t_parser_state *state,
+											t_square *biggest_square);
 
 #endif

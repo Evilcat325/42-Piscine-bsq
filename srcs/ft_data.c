@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 18:33:34 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 21:54:34 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 21:58:05 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,6 @@ t_spacenode	*create_line_node(t_spacenode **prev, int position,
 	curr->length = empty_len;
 	curr->next = NULL;
 	return (curr);
-}
-
-t_square	*new_square(int row, int col)
-{
-	t_square *square;
-
-	if ((square = malloc(sizeof(t_square))))
-		return (NULL);
-	square->row = row;
-	square->col = col;
-	square->size = 0;
-	return (square);
 }
 
 void		ft_free_state(t_parser_state *state)

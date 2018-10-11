@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 22:06:36 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 22:08:46 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ int		ft_solve_bsq(int fd)
 	t_search_state	search_state;
 
 	ft_initialize_parser_state(&parser_state);
-
 	if (ft_parse_bsq(fd, &parser_state) == FAILED)
 		return (FAILED);
 	ft_initialize_search_state(&search_state, &parser_state);

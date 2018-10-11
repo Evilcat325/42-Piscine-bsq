@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 20:41:04 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 20:44:48 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ void	update_biggest_square(t_search_state *state, int size, int row, int col)
 	state->biggest_square->row = row;
 	state->biggest_square->size = size;
 }
+
+/*
+**	check if enough space is at row col with size
+*/
 
 int		ft_check_space(t_search_state *state, int size, int row, int col)
 {

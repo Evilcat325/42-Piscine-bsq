@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 02:42:36 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 22:43:59 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 22:56:37 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int			ft_parse_bsq(int fd, t_parser_state *state)
 		if (state->file_info.height == 0)
 			if (ft_parse_header(buf, state) == FAILED)
 				return (FAILED);
+		if (buf[state->buf_i] == '\0')
+			return (ft_map_error("no map in file"));
 		while (buf[state->buf_i])
 			if (ft_parse_line(buf, state) == FAILED)
 				return (FAILED);

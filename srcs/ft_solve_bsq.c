@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 20:44:48 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 21:05:31 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 
 void	update_biggest_square(t_search_state *state, int size, int row, int col)
 {
-	printf("recording new biggest square (size %d) at col: %d\trow: %d\n",
-			size, col, row);
 	state->biggest_square->col = col;
 	state->biggest_square->row = row;
 	state->biggest_square->size = size;
@@ -65,7 +63,7 @@ int		ft_check_space(t_search_state *state, int size, int row, int col)
 void	grow_square(t_search_state *state, const t_spacenode *node)
 {
 	int	square_size;
-	int backward_row;
+	int s_row;
 	int	col;
 	int	found;
 
@@ -74,23 +72,17 @@ void	grow_square(t_search_state *state, const t_spacenode *node)
 	while (LEFT_LIMIT(node) + col + square_size <= RIGHT_LIMIT(node))
 	{
 		found = SUCCESS;
-		backward_row = 0;
- 		while (backward_row < square_size && state->current_row - backward_row >= 0)
+		s_row = 0;
+		while (s_row < square_size && state->current_row - s_row >= 0 && found)
 		{
 			if (!ft_check_space(state, square_size,
-					state->current_row - backward_row, LEFT_LIMIT(node) + col))
-			{
+					state->current_row - s_row, LEFT_LIMIT(node) + col))
 				found = FAILED;
-				break ;
-			}
-			backward_row++;
+			s_row++;
 		}
-		if (found == SUCCESS && backward_row == square_size)
-		{
-			update_biggest_square(state, square_size,
+		if (found == SUCCESS && s_row == square_size)
+			update_biggest_square(state, square_size++,
 					state->current_row, LEFT_LIMIT(node) + col);
-			square_size++;
-		}
 		else
 			col++;
 	}
@@ -121,22 +113,18 @@ void		ft_find_biggest_square(t_search_state *state)
 	}
 }
 
-int			ft_solve_bsq(char *filename)
+int			ft_solve_bsq(int fd)
 {
-	int				fd;
 	t_parser_state	parser_state;
 	t_search_state	search_state;
 
 	ft_initialize_parser_state(&parser_state);
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		return (FALSE);
+
 	if (ft_parse_bsq(fd, &parser_state) == FAILED)
 		return (ft_map_error("FAILED TO PAAAARSE"));
 	close(fd);
-	ft_print_map(&parser_state);
-	ft_print_map_list(&parser_state);
 	ft_initialize_search_state(&search_state, &parser_state);
 	ft_find_biggest_square(&search_state);
+	ft_free_state(&parser_state);
 	return (0);
 }

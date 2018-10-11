@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 18:33:34 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 17:21:24 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 18:47:35 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		ft_initialize_new_line(t_parser_state *state)
 {
 	state->position = 0;
 	state->break_position = 0;
-	state->curr_node = 0;
+	state->curr_node = NULL;
 	state->lines[state->line_number].nodes = NULL;
 	state->lines[state->line_number].search = NULL;
 }
@@ -81,4 +81,25 @@ t_square		*new_square(int row, int col)
 	square->col = col;
 	square->size = 0;
 	return (square);
+}
+
+void		ft_free_state(t_parser_state *state)
+{
+	int			line;
+	t_spacenode	*node;
+	t_spacenode *next;
+
+	line = 0;
+	while (line < state->file_info.height)
+	{
+		node = state->lines[line].nodes;
+		while (node)
+		{
+			next = node->next;
+			free(node);
+			node = next;
+		}
+		line++;
+	}
+	free(state->lines);
 }

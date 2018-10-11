@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_stdio.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 20:31:37 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 14:56:46 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 17:06:30 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_bsq.h"
 #include <unistd.h>
-#include <stdio.h> // remove plz
 
 #define IS_DIGIT(X) (X >= '0' && X <= '9')
 #define IS_SIGN(X) (X == '+' || X == '-')
@@ -32,19 +31,19 @@ int		ft_atoi_ptr(char *str, int *out)
 	while (*str == ' ')
 		str++;
 	if (!(IS_DIGIT(*str) || IS_SIGN(*str)))
-		return (-1);
+		return (ft_map_error("atoi: char after space is not number or sign"));
 	if (IS_SIGN(*str))
 		sign = *str++ == '-' ? -1 : 1;
-	if (!IS_DIGIT(*str))
-		return (-1);
-	while (*str && IS_DIGIT(*str))
+	while (*str)
 	{
+		if (!IS_DIGIT(*str))
+			return (ft_map_error("atoi: non number char in string"));
 		output *= 10;
 		output += (int)(*str++ - '0');
 	}
 	output *= sign;
 	*out = (output);
-	return (0);
+	return (SUCCESS);
 }
 
 void	ft_print_map(t_parser_state *state)
@@ -79,7 +78,8 @@ void	ft_print_map(t_parser_state *state)
 			write(1, &state->file_info.obstacle, 1);
 			i++;
 		}
-		write(1, "\n", 1);
+		if (line < state->line_number - 1)
+			write(1, "\n", 1);
 		line++;
 	}
 }

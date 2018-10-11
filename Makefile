@@ -6,14 +6,14 @@
 #    By: seli <seli@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/09 16:23:54 by seli              #+#    #+#              #
-#    Updated: 2018/10/10 03:36:01 by seli             ###   ########.fr        #
+#    Updated: 2018/10/10 17:28:04 by seli             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = bsq
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I$(IDIR)
+CFLAGS = -Wall -Wextra -Werror -I$(IDIR) -O3
 
 IDIR = ./includes
 SRCDIR = srcs
@@ -31,6 +31,9 @@ $(NAME):
 
 debug:
 	@$(CC) $(CFLAGS) -o $(NAME) $(SOURCES) .debug/ft_error.c .tests/test_print_map_list.c -g
+
+m32:
+	@$(CC) $(CFLAGS) -m32 -o $(NAME) $(SOURCES) srcs/ft_error.c .tests/test_print_map_list.c
 
 clean:
 

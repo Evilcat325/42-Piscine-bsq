@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:34:51 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 18:27:41 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 18:50:06 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ t_spacenode				*create_line_node(t_spacenode **prev, int position,
 											int empty_len);
 t_square				*new_square(int row, int col);
 t_line					*previous_line(t_parser_state *state, int current_row);
+void					ft_free_state(t_parser_state *state);
 
 int						ft_parse_bsq(int fd, t_parser_state *state);
 int						ft_parse_header(char buf[BUF_SIZE + 1],

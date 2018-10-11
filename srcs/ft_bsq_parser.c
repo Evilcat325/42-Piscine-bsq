@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bsq_parser.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 02:42:36 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 14:56:21 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 17:03:57 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@
 
 #define INDEX(X) (X->buf_i + X->position - X->break_position)
 
+/*
+**	ft_parse_bsq takes in filedescriptor and state object
+**	Buffer Size is defined in header and the current logic is input agnositc
+*/
+
 int			ft_parse_bsq(int fd, t_parser_state *state)
 {
 	char	buf[BUF_SIZE + 1];
@@ -24,15 +29,25 @@ int			ft_parse_bsq(int fd, t_parser_state *state)
 	while ((result = read(fd, buf, BUF_SIZE)))
 	{
 		buf[result] = 0;
-		if (state->file_info.height == 0
-			&& (ft_parse_header(buf, state) == FAILED))
-			return (FAILED);
+		state->buf_i = 0;
+		if (state->file_info.height == 0)
+			if (ft_parse_header(buf, state) == FAILED)
+				return (FAILED);
 		while (buf[state->buf_i])
 			if (ft_parse_line(buf, state) == FAILED)
 				return (FAILED);
 	}
+	if (state->line_number != state->file_info.height)
+		return (ft_map_error("different actual map height vs header height"));
 	return (SUCCESS);
 }
+
+/*
+**	ft_parse_header is searching for the header for the map
+**	return Error when the header is invalid
+**	function also setting the buf_i for the parser to read the map
+**	it also allocate memory for the line node as a strcut array
+*/
 
 int			ft_parse_header(char buf[BUF_SIZE + 1], t_parser_state *state)
 {
@@ -44,6 +59,13 @@ int			ft_parse_header(char buf[BUF_SIZE + 1], t_parser_state *state)
 		return (FAILED);
 	return (SUCCESS);
 }
+
+/*
+**	ft_parse_line will try to parse the current line as linked list
+**	as the buffer might break in line, it depends on the outter buffer read
+**	loop for further inpu as state->break_in_line and state->break_position
+**	will keep the previous buffer info
+*/
 
 int			ft_parse_line(char buf[BUF_SIZE + 1], t_parser_state *state)
 {
@@ -70,6 +92,12 @@ int			ft_parse_line(char buf[BUF_SIZE + 1], t_parser_state *state)
 	return (SUCCESS);
 }
 
+/*
+**	ft_parse_next_space is compressing the next available space as a linked
+**	list node. If it encouter invalid char, it would signal FAILED map error
+**	it would also connect the linked list space node to the line node if exist
+*/
+
 int			ft_parse_next_space(char *start, t_parser_state *state)
 {
 	int		space_len;
@@ -93,6 +121,12 @@ int			ft_parse_next_space(char *start, t_parser_state *state)
 		return (FAILED);
 	return (SUCCESS);
 }
+
+/*
+**	ft_parse_continue will be call when buffer is breaking in line
+**	It perserves the state of position and break position to keep process
+**	the new buffer while maintain the current line state.
+*/
 
 int			ft_parse_continue(char *start, t_parser_state *state)
 {

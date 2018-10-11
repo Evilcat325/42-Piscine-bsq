@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 18:57:56 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 19:14:55 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,19 +86,20 @@ void	grow_square(t_search_state *state, const t_spacenode *node)
 
 void		ft_find_biggest_square(t_search_state *state)
 {
-	t_line		*this_line;
 	t_spacenode	*node;
 	int			row;
 
 	row = 0;
-	while ((this_line = &(state->lines[row])))
+	while (&(state->lines[row]))
 	{
-		while ((node = (this_line->nodes)++))
+		node = state->lines[row].nodes;
+		while (node)
 		{
 			if (node->length < state->biggest_square->size)
 				continue ;  // There isn't enough space to grow a bigger square here.
 			grow_square(state, node);
 			printf("%d\t%d\n", node->index, node->length);
+			node = node->next;
 		}
 		row++;
 	}

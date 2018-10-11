@@ -83,6 +83,6 @@
     {
         "git_url": "teehee",
         "identifier": "16",
-        "makefile_dir": ""
+        "makefile_dir": "../"
     }
 ]

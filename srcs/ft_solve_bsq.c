@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 21:09:42 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 21:11:27 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	grow_square(t_search_state *state, const t_spacenode *node)
 **	Iterate over all lines
 */
 
-void		ft_find_biggest_square(t_search_state *state)
+void	ft_find_biggest_square(t_search_state *state)
 {
 	t_spacenode	*node;
 
@@ -113,7 +113,7 @@ void		ft_find_biggest_square(t_search_state *state)
 	}
 }
 
-int			ft_solve_bsq(int fd)
+int		ft_solve_bsq(int fd)
 {
 	t_parser_state	parser_state;
 	t_search_state	search_state;

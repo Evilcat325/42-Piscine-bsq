@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 02:42:36 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 16:10:39 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 17:03:57 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int			ft_parse_bsq(int fd, t_parser_state *state)
 	while ((result = read(fd, buf, BUF_SIZE)))
 	{
 		buf[result] = 0;
+		state->buf_i = 0;
 		if (state->file_info.height == 0)
 			if (ft_parse_header(buf, state) == FAILED)
 				return (FAILED);

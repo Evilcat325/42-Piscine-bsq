@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 18:33:34 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 15:40:48 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 16:48:34 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,25 @@ t_spacenode	*create_line_node(t_spacenode **prev, int position, int empty_len)
 	curr->length = empty_len;
 	curr->next = NULL;
 	return (curr);
+}
+
+void		ft_free_state(t_parser_state *state)
+{
+	int			line;
+	t_spacenode	*node;
+	t_spacenode *next;
+
+	line = 0;
+	while (line < state->file_info.height)
+	{
+		node = state->lines[line].nodes;
+		while (node)
+		{
+			next = node->next;
+			free(node);
+			node = next;
+		}
+		line++;
+	}
+	free(state->lines);
 }

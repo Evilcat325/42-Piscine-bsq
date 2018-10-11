@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_solve_bsq.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 14:53:58 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 17:30:36 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	is_largest_square();
 
 void	check_prior_lines(t_line *this_line, t_spacenode *space)
 {
-	this_line = 0; 
+	this_line = 0;
 	space = 0;
 }
 
@@ -61,8 +61,8 @@ int		ft_solve_bsq(char *filename)
 	if (ft_parse_bsq(fd, &state) == FAILED)
 		return (ft_map_error("FAILED TO PAAAARSE"));
 	close(fd);
-	ft_print_map_list(&state);
+	// ft_print_map_list(&state);
 	ft_print_map(&state);
-	// free the memory;
+	ft_free_state(&state);
 	return (0);
 }

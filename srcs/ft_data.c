@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 18:33:34 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 18:47:35 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 21:54:34 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,7 @@ t_spacenode	*create_line_node(t_spacenode **prev, int position,
 	return (curr);
 }
 
-// t_line			*previous_line(t_parser_state *state, int current_row)
-// {
-// 	if (current_row < 1 || current_row > state->file_info->height)
-// 		return (NULL);
-// 	return (&(state->lines[current_row - 1]));
-// }
-
-t_square		*new_square(int row, int col)
+t_square	*new_square(int row, int col)
 {
 	t_square *square;
 

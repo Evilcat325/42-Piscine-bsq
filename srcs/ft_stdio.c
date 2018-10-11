@@ -6,14 +6,13 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 20:31:37 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 23:03:30 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 23:05:32 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_bsq.h"
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h> //
 
 #define IS_DIGIT(X) (X >= '0' && X <= '9')
 #define IS_SIGN(X) (X == '+' || X == '-')

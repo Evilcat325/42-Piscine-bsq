@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 17:02:42 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 21:40:39 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 22:05:14 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,5 @@ int		ft_map_error(char *msg)
 {
 	UNUSED(msg);
 	write(2, "map error\n", 10);
-	return (-1);
+	return (FAILED);
 }

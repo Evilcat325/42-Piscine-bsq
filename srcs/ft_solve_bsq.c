@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 21:25:45 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 22:06:36 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,7 @@ int		ft_solve_bsq(int fd)
 	ft_initialize_parser_state(&parser_state);
 
 	if (ft_parse_bsq(fd, &parser_state) == FAILED)
-		return (ft_map_error("FAILED TO PAAAARSE"));
-	close(fd);
+		return (FAILED);
 	ft_initialize_search_state(&search_state, &parser_state);
 	ft_find_biggest_square(&search_state);
 	ft_print_solution(&parser_state, search_state.biggest_square);

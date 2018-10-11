@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:28:24 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 21:46:38 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 22:07:03 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ int		main(int argc, char **argv)
 		if (fd < 0)
 			ft_map_error("fail to open file");
 		else
+		{
 			ft_solve_bsq(fd);
+			close(fd);
+		}
 		i++;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bsq_parser.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 02:42:36 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 22:56:37 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 23:05:52 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ int			ft_parse_line(char buf[BUF_SIZE + 1], t_parser_state *state)
 	}
 	if (!state->break_in_line)
 	{
+		if (state->position == 0)
+			return (ft_map_error("empty line"));
 		if (state->file_info.width == 0)
 			state->file_info.width = state->position;
 		if (state->file_info.width != state->position)

@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:34:51 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 14:57:26 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 18:27:41 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,16 @@
 # define BREAK_IN_EMPTY 1
 # define BREAK_IN_OBSTACLE 2
 
+
+/*
+**	spacenodes describe a region of empty space within a line.
+**	A spacenode links to the next spacenode on the same line.
+**	The last spacenode on a line points to NULL.
+**
+**	on sparse maps, spacenodes serve as a compression mechanism, representing
+**	many empty char with a relatively small amount of information.
+*/
+
 typedef struct			s_spacenode
 {
 	int					index;
@@ -28,11 +38,20 @@ typedef struct			s_spacenode
 	struct s_spacenode	*next;
 }						t_spacenode;
 
+/*
+**	A line corresponds to a row in a map.
+**	A line points to a linked list of spacenodes.
+*/
+
 typedef struct			s_line
 {
 	struct s_spacenode	*nodes;
 	struct s_spacenode	*search;
 }						t_line;
+
+/*
+**	Container for file information
+*/
 
 typedef struct			s_file_info
 {
@@ -51,7 +70,7 @@ typedef struct			s_square
 }						t_square;
 
 /*
-**	buf_i : buffer index
+**	Container for state during parsing
 */
 
 typedef struct			s_parser_state
@@ -64,13 +83,25 @@ typedef struct			s_parser_state
 	t_line				*lines;
 	t_spacenode			*curr_node;
 	t_file_info			file_info;
-	t_square			biggest_square;
 }						t_parser_state;
 
+typedef struct			s_search_state
+{
+	int					current_row;
+	t_line				*lines;
+	const t_file_info	*file_info;
+	t_square			*biggest_square;
+
+}						t_search_state;
+
 void					ft_initialize_parser_state(t_parser_state *state);
+void					ft_initialize_search_state(t_search_state *search_state,
+							const t_parser_state *parser_state);
 void					ft_initialize_new_line(t_parser_state *state);
 t_spacenode				*create_line_node(t_spacenode **prev, int position,
 											int empty_len);
+t_square				*new_square(int row, int col);
+t_line					*previous_line(t_parser_state *state, int current_row);
 
 int						ft_parse_bsq(int fd, t_parser_state *state);
 int						ft_parse_header(char buf[BUF_SIZE + 1],

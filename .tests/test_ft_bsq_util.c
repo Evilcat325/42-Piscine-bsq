@@ -67,4 +67,8 @@ int main()
 	char header_10[] = "-2345\n"; // invalid
 	ret = read_bsq_header(header_10, &info);
 	assert(ret < 0);
+
+	char header_11[] = "12abcd\n"; // invalid
+	ret = read_bsq_header(header_10, &info);
+	assert(ret < 0);
 }

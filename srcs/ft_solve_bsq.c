@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_solve_bsq.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 22:29:33 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 22:50:54 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ int		ft_check_space(t_search_state *state, int size, int row, int col)
 	t_spacenode	*node;
 
 	if (!&state->lines[row])
-		return (FAILED);
+		return (FALSE);
 	node = state->lines[row].nodes;
 	while (node)
 	{
 		if (node->index > col)
-			return (FAILED);
+			return (FALSE);
 		if (LEFT_LIMIT(node) <= col && col + size <= RIGHT_LIMIT(node))
-			return (SUCCESS);
+			return (TRUE);
 		node = node->next;
 	}
-	return (FAILED);
+	return (FALSE);
 }
 
 /*

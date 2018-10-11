@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_stdio.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 20:31:37 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 22:39:27 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 22:48:47 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_bsq.h"
 #include <unistd.h>
-#include <stdio.h>
+#include <stdlib.h>
+#include <stdio.h> //
 
 #define IS_DIGIT(X) (X >= '0' && X <= '9')
 #define IS_SIGN(X) (X == '+' || X == '-')
@@ -91,6 +92,9 @@ void	ft_print_solution(t_parser_state *state, t_square *biggest_square)
 		line++;
 		write(1, "\n", 1);
 	}
+	free(strings.empty);
+	free(strings.obstacle);
+	free(strings.square);
 }
 
 void	ft_print_line(t_string_state *strings, t_parser_state *state,

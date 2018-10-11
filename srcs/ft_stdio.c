@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_stdio.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 20:31:37 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 17:06:30 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 21:05:25 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,21 @@ int		ft_atoi_ptr(char *str, int *out)
 	return (SUCCESS);
 }
 
-void	ft_print_map(t_parser_state *state)
+int		is_full(t_square *biggest_square, int row, int col)
+{
+	if (row <= biggest_square->row &&
+		row > biggest_square->row - biggest_square->size &&
+		col >= biggest_square->col &&
+		col < biggest_square->col + biggest_square->size)
+		return (1);
+	return (0);
+}
+
+void	ft_print_solution(t_parser_state *state, t_square *biggest_square)
 {
 	int			line;
 	int			i;
 	t_spacenode	*node;
-	// char		*empty;
-	// char		*obstcale;
 
 	line = 0;
 	while (line < state->line_number)
@@ -68,7 +76,10 @@ void	ft_print_map(t_parser_state *state)
 			}
 			while (i < node->index + node->length)
 			{
-				write(1, &state->file_info.empty, 1);
+				if (is_full(biggest_square, line, i))
+					write(1, &state->file_info.full, 1);
+				else
+					write(1, &state->file_info.empty, 1);
 				i++;
 			}
 			node = node->next;

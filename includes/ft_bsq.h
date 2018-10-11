@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:34:51 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 18:50:06 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 21:00:42 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ typedef struct			s_search_state
 	t_line				*lines;
 	const t_file_info	*file_info;
 	t_square			*biggest_square;
-
 }						t_search_state;
 
 void					ft_initialize_parser_state(t_parser_state *state);
@@ -124,5 +123,6 @@ int						ft_obstacle_len(char *str, t_parser_state *state);
 
 void					ft_print_map_list(t_parser_state *state);
 void					ft_print_map(t_parser_state *state);
+void					ft_print_solution(t_parser_state *state, t_square *biggest_square);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 02:42:36 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 22:06:01 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 22:41:41 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,16 @@ int			ft_parse_header(char buf[BUF_SIZE + 1], t_parser_state *state)
 int			ft_parse_line(char buf[BUF_SIZE + 1], t_parser_state *state)
 {
 	if (state->break_in_line)
-		ft_parse_continue(&buf[state->buf_i], state);
+	{
+		if (ft_parse_continue(&buf[state->buf_i], state) == FAILED)
+			return (FAILED);
+	}
 	else
 		ft_initialize_new_line(state);
 	while (buf[INDEX(state)] != '\n')
 	{
-		ft_parse_next_space(&buf[INDEX(state)], state);
+		if (ft_parse_next_space(&buf[INDEX(state)], state) == FAILED)
+			return (FAILED);
 		if (state->break_in_line)
 			break ;
 	}

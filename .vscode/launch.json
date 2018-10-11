@@ -9,7 +9,7 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/bsq",
-			"args": [".prior_art/test.10.15.5.1"],
+			"args": [".prior_art/alamit/grids/[10x1][18,1]full_end.txt"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
 			"environment": [],

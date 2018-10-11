@@ -6,14 +6,13 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 20:31:37 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 22:48:47 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 23:05:32 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_bsq.h"
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h> //
 
 #define IS_DIGIT(X) (X >= '0' && X <= '9')
 #define IS_SIGN(X) (X == '+' || X == '-')
@@ -85,7 +84,7 @@ void	ft_print_solution(t_parser_state *state, t_square *biggest_square)
 	line = 0;
 	while (line < state->line_number)
 	{
-		if (!&state->lines[line])
+		if (!state->lines[line].nodes)
 			write(1, strings.obstacle, state->file_info.width);
 		else
 			ft_print_line(&strings, state, biggest_square, line);

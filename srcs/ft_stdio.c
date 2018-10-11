@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_stdio.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 20:31:37 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 21:09:10 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 21:50:26 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,38 +58,42 @@ int		is_full(t_square *biggest_square, int row, int col)
 
 void	ft_print_solution(t_parser_state *state, t_square *biggest_square)
 {
-	int			line;
-	int			i;
-	t_spacenode	*node;
+	int				line;
+	t_string_state	strings;
 
+	ft_initialize_string(&strings, state, biggest_square);
 	line = 0;
 	while (line < state->line_number)
 	{
-		node = state->lines[line].nodes;
-		i = 0;
-		while (node)
-		{
-			while (i++ < node->index)
-			{
-				write(1, &state->file_info.obstacle, 1);
-			}
-			while (i < node->index + node->length)
-			{
-				if (is_full(biggest_square, line, i))
-					write(1, &state->file_info.full, 1);
-				else
-					write(1, &state->file_info.empty, 1);
-				i++;
-			}
-			node = node->next;
-		}
-		while (i < state->file_info.width)
-		{
-			write(1, &state->file_info.obstacle, 1);
-			i++;
-		}
-		if (line < state->line_number - 1)
-			write(1, "\n", 1);
+		ft_print_line(&strings, state, biggest_square, line);
 		line++;
 	}
+}
+
+void	ft_print_line(t_string_state *strings, t_parser_state *state,
+						t_square *biggest_square, int line)
+{
+	t_spacenode		*node;
+
+	UNUSED(biggest_square);
+	if (!&state->lines[line])
+		write(1, strings->obstacle, state->file_info.width);
+	else
+	{
+		node = state->lines[line].nodes;
+		if (node->index != 0)
+			write(1, strings->obstacle, node->index);
+		while (node)
+		{
+			write(1, strings->empty, node->length);
+			if (node->next)
+				write(1, strings->obstacle,
+					LEFT_LIMIT(node->next) - RIGHT_LIMIT(node));
+			else if (!node->next && RIGHT_LIMIT(node) < state->file_info.width)
+				write(1, strings->obstacle,
+					state->file_info.width - RIGHT_LIMIT(node));
+			node = node->next;
+		}
+	}
+	write(1, "\n", 1);
 }

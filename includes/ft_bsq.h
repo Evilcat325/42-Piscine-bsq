@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bsq.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:34:51 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 21:08:36 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 21:40:46 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@
 # define BUF_SIZE 4096
 # define BREAK_IN_EMPTY 1
 # define BREAK_IN_OBSTACLE 2
-
+# define RIGHT_LIMIT(SPACENODE) (SPACENODE->index + SPACENODE->length)
+# define LEFT_LIMIT(SPACENODE) (SPACENODE->index)
+# define UNUSED(x) (void)(x)
 
 /*
 **	spacenodes describe a region of empty space within a line.
@@ -93,10 +95,25 @@ typedef struct			s_search_state
 	t_square			*biggest_square;
 }						t_search_state;
 
+/*
+**	Container for output
+*/
+
+typedef struct			s_string_state
+{
+	char				*empty;
+	char				*obstacle;
+	char				*square;
+}						t_string_state;
+
 void					ft_initialize_parser_state(t_parser_state *state);
 void					ft_initialize_search_state(t_search_state *search_state,
 							const t_parser_state *parser_state);
 void					ft_initialize_new_line(t_parser_state *state);
+void					ft_initialize_string(t_string_state *strings,
+												t_parser_state *state,
+												t_square *biggest_square);
+
 t_spacenode				*create_line_node(t_spacenode **prev, int position,
 											int empty_len);
 t_square				*new_square(int row, int col);
@@ -131,5 +148,8 @@ void					ft_print_map_list(t_parser_state *state);
 void					ft_print_map(t_parser_state *state);
 void					ft_print_solution(t_parser_state *state,
 											t_square *biggest_square);
+void					ft_print_line(t_string_state *strings,
+										t_parser_state *state,
+										t_square *biggest_square, int line);
 
 #endif

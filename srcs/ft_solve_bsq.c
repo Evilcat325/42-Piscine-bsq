@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_solve_bsq.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 21:11:27 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 21:25:45 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
-
-
-#define RIGHT_LIMIT(SPACENODE) (SPACENODE->index + SPACENODE->length)
-#define LEFT_LIMIT(SPACENODE) (SPACENODE->index)
 
 /*
 **	Returns SUCCESS if a line contains empty spaces greater than or equal to

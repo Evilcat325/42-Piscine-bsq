@@ -6,7 +6,7 @@
 #    By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/09 16:23:54 by seli              #+#    #+#              #
-#    Updated: 2018/10/10 19:14:54 by nkirkby          ###   ########.fr        #
+#    Updated: 2018/10/10 21:58:47 by nkirkby          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRCDIR = srcs
 
 SOURCES = ft_main.c ft_data.c ft_stdio.c ft_string.c \
 			ft_solve_bsq.c ft_bsq_util.c \
-			ft_bsq_parser.c
+			ft_bsq_parser.c ft_square.c
 SOURCES := $(SOURCES:%=$(SRCDIR)/%)
 
 

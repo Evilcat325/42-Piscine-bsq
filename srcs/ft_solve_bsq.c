@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_solve_bsq.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 21:25:45 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 21:55:09 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ int		ft_solve_bsq(int fd)
 	t_search_state	search_state;
 
 	ft_initialize_parser_state(&parser_state);
-
 	if (ft_parse_bsq(fd, &parser_state) == FAILED)
 		return (ft_map_error("FAILED TO PAAAARSE"));
 	close(fd);

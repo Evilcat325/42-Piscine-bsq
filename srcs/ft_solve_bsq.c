@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_solve_bsq.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 19:35:02 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 19:44:31 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +89,17 @@ void		ft_find_biggest_square(t_search_state *state)
 	int			row;
 
 	row = 0;
-	while (&(state->lines[row]))
+	while (row < state->file_info->height)
 	{
-		node = state->lines[row].nodes;
-		while (node)
+		if (&(state->lines[row]))
 		{
-			if (node->length < state->biggest_square->size)
-				continue ;  // There isn't enough space to grow a bigger square here.
-			grow_square(state, node);
-			node = node->next;
+			node = state->lines[row].nodes;
+			while (node)
+			{
+				if (node->length >= state->biggest_square->size)
+					grow_square(state, node);
+				node = node->next;
+			}
 		}
 		row++;
 	}

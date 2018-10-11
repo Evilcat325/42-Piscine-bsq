@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 02:42:36 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 22:41:41 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 22:43:59 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ int			ft_parse_next_space(char *start, t_parser_state *state)
 	else if (space_len == 0)
 	{
 		obstcale_len = ft_obstacle_len(start, state);
+		if (obstcale_len == FAILED)
+			return (FAILED);
 		state->position += obstcale_len;
 	}
 	else

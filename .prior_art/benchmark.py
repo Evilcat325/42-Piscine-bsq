@@ -216,7 +216,7 @@ ALAMIT_DIR = os.path.join(HERE, 'alamit/grids')
 def run_adrien_tests(path_to_binary: str):
 	all_maps = [f for f in os.listdir(ALAMIT_DIR) if '.txt' in f]
 	print("found maps: \n{}\n".format('\n'.join(all_maps)))
-	for mapfile in [f for f in os.listdir(ALAMIT_DIR) if '.txt' in f]:
+	for mapfile in all_maps:
 		print(f"mapfile: {mapfile}")
 		print(path_to_binary)
 		output = subprocess.check_call([path_to_binary, os.path.join(ALAMIT_DIR, mapfile)])

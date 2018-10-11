@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 19:14:55 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 19:21:55 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,16 @@ void	grow_square(t_search_state *state, const t_spacenode *node)
 	{
 		row = state->current_row;
 		while (line_is_empty_in_range(&(state->lines[row].nodes[0]),
-										node->index, square_size))
+										node->index, square_size) &&
+				row > 0)
 		{
-			if (state->current_row - row > square_size)
+			if (state->current_row - row + 1 > square_size)
+			{
+				printf("current row: %d, row: %d, square_size: %d\n", state->current_row, row, square_size);
 				update_biggest_square(state, state->current_row - row,
 										row, col);
+			}
+				
 			row--;
 		}
 		col++;

@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 20:13:29 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 20:41:04 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		ft_check_space(t_search_state *state, int size, int row, int col)
 	{
 		if (node->index > col)
 			return (FAILED);
-		if (LEFT_LIMIT(node) <= col && col + size < RIGHT_LIMIT(node))
+		if (LEFT_LIMIT(node) <= col && col + size <= RIGHT_LIMIT(node))
 			return (SUCCESS);
 		node = node->next;
 	}
@@ -67,13 +67,13 @@ void	grow_square(t_search_state *state, const t_spacenode *node)
 
 	square_size = state->biggest_square->size + 1;
 	col = 0;
-	while (col + state->biggest_square->size < RIGHT_LIMIT(node))
+	while (LEFT_LIMIT(node) + col + square_size <= RIGHT_LIMIT(node))
 	{
 		found = SUCCESS;
 		backward_row = 0;
-		while (backward_row < square_size && state->current_row - backward_row >= 0)
+ 		while (backward_row < square_size && state->current_row - backward_row >= 0)
 		{
-			if (ft_check_space(state, square_size,
+			if (!ft_check_space(state, square_size,
 					state->current_row - backward_row, LEFT_LIMIT(node) + col))
 			{
 				found = FAILED;
@@ -81,7 +81,7 @@ void	grow_square(t_search_state *state, const t_spacenode *node)
 			}
 			backward_row++;
 		}
-		if (found == SUCCESS)
+		if (found == SUCCESS && backward_row == square_size)
 		{
 			update_biggest_square(state, square_size,
 					state->current_row, LEFT_LIMIT(node) + col);
@@ -99,14 +99,13 @@ void	grow_square(t_search_state *state, const t_spacenode *node)
 void		ft_find_biggest_square(t_search_state *state)
 {
 	t_spacenode	*node;
-	int			row;
 
-	row = 0;
-	while (row < state->file_info->height)
+	state->current_row = 0;
+	while (state->current_row < state->file_info->height)
 	{
-		if (&(state->lines[row]))
+		if (&(state->lines[state->current_row]))
 		{
-			node = state->lines[row].nodes;
+			node = state->lines[state->current_row].nodes;
 			while (node)
 			{
 				if (node->length >= state->biggest_square->size)
@@ -114,7 +113,7 @@ void		ft_find_biggest_square(t_search_state *state)
 				node = node->next;
 			}
 		}
-		row++;
+		state->current_row += 1;
 	}
 }
 

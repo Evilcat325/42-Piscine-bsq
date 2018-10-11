@@ -243,10 +243,10 @@ def main() -> None:
 			outfile = os.path.join(OUTPUT_DIR, f"{entry.identifier}_{os.path.basename(mapfile)}")
 			mapfile_fullpath = f"{MAPS_DIR}/{mapfile}"
 			print(f"{mapfile :<{20}} -- size: {humanize.naturalsize(os.path.getsize(mapfile_fullpath))}")
-			profile_bsq_runtime(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.STDIN)
-			profile_bsq_runtime(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.FILENAME)
-			# profile_bsq_memory_usage(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.STDIN)
-			# profile_bsq_memory_usage(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.FILENAME)
+			# profile_bsq_runtime(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.STDIN)
+			# profile_bsq_runtime(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.FILENAME)
+			profile_bsq_memory_usage(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.STDIN)
+			profile_bsq_memory_usage(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.FILENAME)
 		kill_all_bsq()
 		
 		# profile_bsq_memory_usage(entry.binary_path, )

@@ -6,7 +6,7 @@
 /*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 18:50:30 by nkirkby          ###   ########.fr       */
+/*   Updated: 2018/10/10 18:57:56 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int			line_is_empty_in_range(t_spacenode *node, int index, int range)
 
 void	update_biggest_square(t_search_state* state, int size, int row, int col)
 {
-	printf("recording new biggest square (%d) at col: %d\trow: %d", size, col, row);
+	printf("recording new biggest square (size %d) at col: %d\trow: %d\n", size, col, row);
 	state->biggest_square->col = col;
 	state->biggest_square->row = row;
 	state->biggest_square->size = size;
@@ -67,7 +67,10 @@ void	grow_square(t_search_state *state, const t_spacenode *node)
 		while (line_is_empty_in_range(&(state->lines[row].nodes[0]),
 										node->index, square_size))
 		{
-			;
+			if (state->current_row - row > square_size)
+				update_biggest_square(state, state->current_row - row,
+										row, col);
+			row--;
 		}
 		col++;
 	}

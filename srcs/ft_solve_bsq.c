@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_solve_bsq.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:32:02 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 22:08:46 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 22:29:33 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,9 @@ int		ft_solve_bsq(int fd)
 {
 	t_parser_state	parser_state;
 	t_search_state	search_state;
+	t_square		square;
 
+	search_state.biggest_square = &square;
 	ft_initialize_parser_state(&parser_state);
 	if (ft_parse_bsq(fd, &parser_state) == FAILED)
 		return (FAILED);

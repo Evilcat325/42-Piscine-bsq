@@ -6,12 +6,13 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 20:31:37 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 21:50:26 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 22:35:03 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_bsq.h"
 #include <unistd.h>
+#include <stdio.h>
 
 #define IS_DIGIT(X) (X >= '0' && X <= '9')
 #define IS_SIGN(X) (X == '+' || X == '-')
@@ -46,14 +47,32 @@ int		ft_atoi_ptr(char *str, int *out)
 	return (SUCCESS);
 }
 
-int		is_full(t_square *biggest_square, int row, int col)
+int		ft_is_full(t_square *biggest_square, int row, t_spacenode *node)
 {
 	if (row <= biggest_square->row &&
 		row > biggest_square->row - biggest_square->size &&
-		col >= biggest_square->col &&
-		col < biggest_square->col + biggest_square->size)
-		return (1);
-	return (0);
+		LEFT_LIMIT(node) <= biggest_square->col &&
+		biggest_square->col < RIGHT_LIMIT(node))
+		return (TRUE);
+	return (FALSE);
+}
+
+void	ft_full_node(t_square *biggest_square, t_spacenode *node,
+						t_string_state *strings)
+{
+	if (node->index == biggest_square->col)
+	{
+		write(1, strings->square, biggest_square->size);
+		write(1, strings->empty, node->length - biggest_square->size);
+	}
+	else
+	{
+		write(1, strings->empty, biggest_square->col - node->index);
+		write(1, strings->square, biggest_square->size);
+		if (biggest_square->col + biggest_square->size < RIGHT_LIMIT(node))
+			write(1, strings->empty,
+				RIGHT_LIMIT(node) - biggest_square->col - biggest_square->size);
+	}
 }
 
 void	ft_print_solution(t_parser_state *state, t_square *biggest_square)
@@ -65,8 +84,12 @@ void	ft_print_solution(t_parser_state *state, t_square *biggest_square)
 	line = 0;
 	while (line < state->line_number)
 	{
-		ft_print_line(&strings, state, biggest_square, line);
+		if (!&state->lines[line])
+			write(1, strings.obstacle, state->file_info.width);
+		else
+			ft_print_line(&strings, state, biggest_square, line);
 		line++;
+		write(1, "\n", 1);
 	}
 }
 
@@ -75,25 +98,21 @@ void	ft_print_line(t_string_state *strings, t_parser_state *state,
 {
 	t_spacenode		*node;
 
-	UNUSED(biggest_square);
-	if (!&state->lines[line])
-		write(1, strings->obstacle, state->file_info.width);
-	else
+	node = state->lines[line].nodes;
+	if (node->index != 0)
+		write(1, strings->obstacle, node->index);
+	while (node)
 	{
-		node = state->lines[line].nodes;
-		if (node->index != 0)
-			write(1, strings->obstacle, node->index);
-		while (node)
-		{
+		if (ft_is_full(biggest_square, line, node))
+			ft_full_node(biggest_square, node, strings);
+		else
 			write(1, strings->empty, node->length);
-			if (node->next)
-				write(1, strings->obstacle,
-					LEFT_LIMIT(node->next) - RIGHT_LIMIT(node));
-			else if (!node->next && RIGHT_LIMIT(node) < state->file_info.width)
-				write(1, strings->obstacle,
-					state->file_info.width - RIGHT_LIMIT(node));
-			node = node->next;
-		}
+		if (node->next)
+			write(1, strings->obstacle,
+				LEFT_LIMIT(node->next) - RIGHT_LIMIT(node));
+		else if (!node->next && RIGHT_LIMIT(node) < state->file_info.width)
+			write(1, strings->obstacle,
+				state->file_info.width - RIGHT_LIMIT(node));
+		node = node->next;
 	}
-	write(1, "\n", 1);
 }

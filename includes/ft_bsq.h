@@ -6,7 +6,7 @@
 /*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:34:51 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 21:40:46 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 22:27:52 by seli             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,10 @@ void					ft_find_biggest_square(t_search_state *state);
 
 int						ft_parse_bsq(int fd, t_parser_state *state);
 int						ft_atoi_ptr(char *str, int *out);
+int						ft_is_full(t_square *biggest_square,
+									int row, t_spacenode *node);
+void					ft_full_node(t_square *biggest_square, t_spacenode *node,
+									t_string_state *strings);
 int						ft_space_len(char *str, t_parser_state *state);
 int						ft_obstacle_len(char *str, t_parser_state *state);
 

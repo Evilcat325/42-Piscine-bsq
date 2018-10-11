@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bsq.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seli <seli@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nkirkby <nkirkby@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 16:34:51 by seli              #+#    #+#             */
-/*   Updated: 2018/10/10 22:27:52 by seli             ###   ########.fr       */
+/*   Updated: 2018/10/10 22:45:17 by nkirkby          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,8 @@ int						ft_parse_bsq(int fd, t_parser_state *state);
 int						ft_atoi_ptr(char *str, int *out);
 int						ft_is_full(t_square *biggest_square,
 									int row, t_spacenode *node);
-void					ft_full_node(t_square *biggest_square, t_spacenode *node,
+void					ft_full_node(t_square *biggest_square,
+									t_spacenode *node,
 									t_string_state *strings);
 int						ft_space_len(char *str, t_parser_state *state);
 int						ft_obstacle_len(char *str, t_parser_state *state);

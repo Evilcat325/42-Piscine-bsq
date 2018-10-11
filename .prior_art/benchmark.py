@@ -212,6 +212,16 @@ def purge_output_dir():
 		os.unlink(fp)
 	
 
+ALAMIT_DIR = os.path.join(HERE, 'alamit/grids')
+def run_adrien_tests(path_to_binary: str):
+	all_maps = [f for f in os.listdir(ALAMIT_DIR) if '.txt' in f]
+	print("found maps: \n{}\n".format('\n'.join(all_maps)))
+	for mapfile in [f for f in os.listdir(ALAMIT_DIR) if '.txt' in f]:
+		print(f"mapfile: {mapfile}")
+		print(path_to_binary)
+		output = subprocess.check_call([path_to_binary, os.path.join(ALAMIT_DIR, mapfile)])
+		print(output)
+
 
 def main() -> None:
 	repo_man = RepositoryManager('repos.json')
@@ -237,20 +247,23 @@ def main() -> None:
 	selected_entries = [e for e in repo_man.buildable_entries if e.identifier in ['16', '0', '2', '9', '14', '15']]
 	selected_entries.reverse()
 
-	for entry in selected_entries:
-		print(f">>>>> repo: [{entry.identifier}] {entry.git_url}  I'll average {RUNTIME_AVERAGER_SET_SIZE} runs.")
-		for mapfile in BSQMap.all_maps():
-			outfile = os.path.join(OUTPUT_DIR, f"{entry.identifier}_{os.path.basename(mapfile)}")
-			mapfile_fullpath = f"{MAPS_DIR}/{mapfile}"
-			print(f"{mapfile :<{20}} -- size: {humanize.naturalsize(os.path.getsize(mapfile_fullpath))}")
-			# profile_bsq_runtime(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.STDIN)
-			# profile_bsq_runtime(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.FILENAME)
-			profile_bsq_memory_usage(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.STDIN)
-			profile_bsq_memory_usage(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.FILENAME)
-		kill_all_bsq()
+	run_adrien_tests("../bsq")
+
+	# for entry in selected_entries:
+	# 	print(f">>>>> repo: [{entry.identifier}] {entry.git_url}  I'll average {RUNTIME_AVERAGER_SET_SIZE} runs.")
+	# 	for mapfile in BSQMap.all_maps():
+	# 		outfile = os.path.join(OUTPUT_DIR, f"{entry.identifier}_{os.path.basename(mapfile)}")
+	# 		mapfile_fullpath = f"{MAPS_DIR}/{mapfile}"
+	# 		print(f"{mapfile :<{20}} -- size: {humanize.naturalsize(os.path.getsize(mapfile_fullpath))}")
+
+	# 		# profile_bsq_runtime(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.STDIN)
+	# 		# profile_bsq_runtime(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.FILENAME)
+	# 		profile_bsq_memory_usage(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.STDIN)
+	# 		profile_bsq_memory_usage(entry.binary_path, mapfile_fullpath, outfile, BSQInputMethod.FILENAME)
+	# 	kill_all_bsq()
 		
-		# profile_bsq_memory_usage(entry.binary_path, )
-		# kill_all_bsq()
+	# 	# profile_bsq_memory_usage(entry.binary_path, )
+	# 	# kill_all_bsq()
 
 if __name__ == '__main__':
 	main()
